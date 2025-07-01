@@ -1,9 +1,28 @@
 import { useState } from "react";
 import TextInput from "../components/TextInput";
+import { login } from "../services/login";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleLogin = async () => {
+    if (!email.includes("@")) {
+      alert("Invalid email");
+    } else if (
+      password.length < 8 ||
+      !/[a-z]/.test(password) ||
+      !/[A-Z]/.test(password)
+    ) {
+      alert("Invalid password");
+    }
+    try {
+      await login(email, password);
+    } catch (error: any) {
+      console.log(error);
+      throw error;
+    }
+  };
 
   return (
     <>
@@ -14,8 +33,7 @@ const LoginPage = () => {
         placeholder="Password"
         onChange={setPassword}
       />
-      <p>{email}</p>
-      <p>{password}</p>
+      <button onClick={handleLogin}>Log In</button>
     </>
   );
 };
