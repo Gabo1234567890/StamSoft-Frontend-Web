@@ -1,7 +1,8 @@
 import { useState } from "react";
 import TextInput from "../components/TextInput";
-import { login } from "../services/login";
+import { googleLogin, login } from "../services/login";
 import { useAuth } from "../context/AuthContext";
+import GoogleLoginButton from "../components/GoogleLoginButton";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -27,6 +28,16 @@ const LoginPage = () => {
     }
   };
 
+  const handleGoogleLogin = async (googleToken: string) => {
+    try {
+      const response = await googleLogin(googleToken);
+      setAuth(response.token, response.user);
+    } catch (error) {
+      console.error(error);
+      alert(error);
+    }
+  };
+
   return (
     <>
       <h1>Login Page</h1>
@@ -37,6 +48,7 @@ const LoginPage = () => {
         onChange={setPassword}
       />
       <button onClick={handleLogin}>Log In</button>
+      <GoogleLoginButton onTokenReceived={handleGoogleLogin} />
     </>
   );
 };

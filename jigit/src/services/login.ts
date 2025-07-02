@@ -1,4 +1,3 @@
-import type { User } from "../types/User";
 import axiosInstance from "./Axios";
 
 export const login = async (
@@ -20,4 +19,15 @@ export const login = async (
     console.log(error);
     throw error;
   }
+};
+
+export const googleLogin = async (
+  googleToken: string
+): Promise<GoogleLoginResponse> => {
+  const response = await axiosInstance.post<GoogleLoginResponse>(
+    "/auth/google",
+    { idToken: googleToken }
+  );
+
+  return response.data;
 };
