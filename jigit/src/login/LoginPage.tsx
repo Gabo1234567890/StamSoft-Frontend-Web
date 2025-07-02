@@ -1,13 +1,15 @@
 import { useState } from "react";
 import TextInput from "../components/TextInput";
 import { login } from "../services/login";
+import { useAuth } from "../context/AuthContext";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { setAuth } = useAuth();
 
   const handleLogin = async () => {
-    if (!email.includes("@")) {
+    if (!email.includes("@") || !email.includes(".")) {
       alert("Invalid email");
     } else if (
       password.length < 8 ||
@@ -17,10 +19,11 @@ const LoginPage = () => {
       alert("Invalid password");
     }
     try {
-      await login(email, password);
+      const { user, token } = await login(email, password);
+      setAuth(token, user);
     } catch (error: any) {
       console.log(error);
-      throw error;
+      alert(error);
     }
   };
 

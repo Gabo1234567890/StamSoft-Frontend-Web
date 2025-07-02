@@ -1,7 +1,9 @@
+import type { Dispatch, SetStateAction } from "react";
+
 interface TextInputProps {
   type: string;
   placeholder: string;
-  onChange: any;
+  onChange: Dispatch<SetStateAction<string>>;
 }
 
 const TextInput = ({ type, placeholder, onChange }: TextInputProps) => {
