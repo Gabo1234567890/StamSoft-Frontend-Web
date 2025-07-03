@@ -23,8 +23,8 @@ const LoginPage = () => {
       alert("Invalid password");
     }
     try {
-      const { user, token } = await login(email, password);
-      setAuth(token, user);
+      const { user, accessToken } = await login(email, password);
+      setAuth(accessToken, user);
     } catch (error: any) {
       console.log(error);
       alert(error);

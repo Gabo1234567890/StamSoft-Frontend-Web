@@ -2,12 +2,12 @@ import axiosInstance from "./Axios";
 
 export const login = async (
   email: string,
-  pass: string
+  password: string
 ): Promise<LoginResponse> => {
   try {
     const response = await axiosInstance.post(
       "/auth/login",
-      { email, pass },
+      { email, password },
       { headers: { "Content-Type": "application/json" } }
     );
     if (response.status != 200 && response.status != 201) {

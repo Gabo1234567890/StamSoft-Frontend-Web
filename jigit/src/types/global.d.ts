@@ -9,7 +9,7 @@ interface Window {
 }
 
 interface LoginResponse {
-  token: string;
+  accessToken: string;
   user: User;
 }
 
