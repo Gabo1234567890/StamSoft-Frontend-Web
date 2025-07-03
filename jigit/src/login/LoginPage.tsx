@@ -5,6 +5,7 @@ import GoogleLoginButton from "../components/GoogleLoginButton";
 import FacebookLoginButton from "../components/FacebookLoginButton";
 import { login } from "../services/login";
 import { Link } from "react-router-dom";
+import ForgottenPasswordButton from "./components/ForgottenPasswordButton";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -43,6 +44,7 @@ const LoginPage = () => {
       <GoogleLoginButton />
       <FacebookLoginButton />
       <Link to={"/signup"}>Don't have an account? Sign Up</Link>
+      <ForgottenPasswordButton email={email} />
     </>
   );
 };
