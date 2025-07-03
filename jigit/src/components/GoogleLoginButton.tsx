@@ -1,10 +1,18 @@
 import { useEffect, useRef } from "react";
+import { googleLogin } from "../services/login";
+import { useAuth } from "../context/AuthContext";
 
-interface Props {
-  onTokenReceived: (googleToken: string) => void;
-}
-
-const GoogleLoginButton = ({ onTokenReceived }: Props) => {
+const GoogleLoginButton = () => {
+  const { setAuth } = useAuth();
+  const handleGoogleLogin = async (googleToken: string) => {
+    try {
+      const response = await googleLogin(googleToken);
+      setAuth(response.token, response.user);
+    } catch (error) {
+      console.log(error);
+      alert(error);
+    }
+  };
   const divRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -15,7 +23,7 @@ const GoogleLoginButton = ({ onTokenReceived }: Props) => {
       callback: (response: GoogleCredentialsResponse) => {
         try {
           const token = response.credential;
-          onTokenReceived(token);
+          handleGoogleLogin(token);
         } catch (error) {
           console.log(error);
           alert(error);
@@ -27,7 +35,7 @@ const GoogleLoginButton = ({ onTokenReceived }: Props) => {
       theme: "outline",
       size: "large",
     });
-  }, [onTokenReceived]);
+  });
 
   return <div ref={divRef}></div>;
 };

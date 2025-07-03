@@ -1,9 +1,10 @@
 import { useState } from "react";
 import TextInput from "../components/TextInput";
-import { facebookLogin, googleLogin, login } from "../services/login";
 import { useAuth } from "../context/AuthContext";
-import GoogleLoginButton from "./components/GoogleLoginButton";
-import FacebookLoginButton from "./components/FacebookLoginButton";
+import GoogleLoginButton from "../components/GoogleLoginButton";
+import FacebookLoginButton from "../components/FacebookLoginButton";
+import { login } from "../services/login";
+import { Link } from "react-router-dom";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -29,26 +30,6 @@ const LoginPage = () => {
     }
   };
 
-  const handleGoogleLogin = async (googleToken: string) => {
-    try {
-      const response = await googleLogin(googleToken);
-      setAuth(response.token, response.user);
-    } catch (error) {
-      console.log(error);
-      alert(error);
-    }
-  };
-
-  const handleFacebookLogin = async () => {
-    try {
-      const response = await facebookLogin();
-      setAuth(response.token, response.user);
-    } catch (error) {
-      console.log(error);
-      alert(error);
-    }
-  };
-
   return (
     <>
       <h1>Login Page</h1>
@@ -59,8 +40,9 @@ const LoginPage = () => {
         onChange={setPassword}
       />
       <button onClick={handleLogin}>Log In</button>
-      <GoogleLoginButton onTokenReceived={handleGoogleLogin} />
-      <FacebookLoginButton handleLogin={handleFacebookLogin} />
+      <GoogleLoginButton />
+      <FacebookLoginButton />
+      <Link to={"/signup"}>Don't have an account? Sign Up</Link>
     </>
   );
 };
