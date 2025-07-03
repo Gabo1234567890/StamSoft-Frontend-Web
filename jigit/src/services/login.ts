@@ -59,3 +59,40 @@ export const facebookLogin = async (): Promise<LoginResponse> => {
     throw error;
   }
 };
+
+export const forgotPassword = async (email: string): Promise<void> => {
+  try {
+    const response = await axiosInstance.post(
+      "/auth/forgotten-password",
+      {
+        email,
+      },
+      { headers: { "Content-Type": "application/json" } }
+    );
+    if (response.status !== 200 && response.status !== 201) {
+      throw new Error(`Failed to send reset email: ${response.statusText}`);
+    }
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const resetPassword = async (
+  newPassword: string,
+  token: string
+): Promise<void> => {
+  try {
+    const response = await axiosInstance.post(
+      "auth/reset-password",
+      { token, newPassword },
+      { headers: { "Content-Type": "application/json" } }
+    );
+    if (response.status !== 200 && response.status !== 201) {
+      throw new Error(`Failed to send reset email: ${response.statusText}`);
+    }
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
