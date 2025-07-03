@@ -2,8 +2,8 @@ import { useState } from "react";
 import TextInput from "../components/TextInput";
 import { facebookLogin, googleLogin, login } from "../services/login";
 import { useAuth } from "../context/AuthContext";
-import GoogleLoginButton from "../components/GoogleLoginButton";
-import FacebookLoginButton from "../components/FacebookLoginButton";
+import GoogleLoginButton from "./components/GoogleLoginButton";
+import FacebookLoginButton from "./components/FacebookLoginButton";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
