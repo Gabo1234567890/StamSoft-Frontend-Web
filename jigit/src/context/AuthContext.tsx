@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const refreshAuth = async () => {
     try {
       const response = await axiosInstance.get<{ token: string; user: User }>(
-        "/me"
+        "/user/profile"
       );
       setAuth(response.data.token, response.data.user);
     } catch (error) {
