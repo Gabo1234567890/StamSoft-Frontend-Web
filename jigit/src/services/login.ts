@@ -3,7 +3,7 @@ import axiosInstance from "./Axios";
 export const login = async (
   email: string,
   pass: string
-): Promise<{ token: string; user: User }> => {
+): Promise<LoginResponse> => {
   try {
     const response = await axiosInstance.post(
       "/auth/login",
@@ -11,7 +11,7 @@ export const login = async (
       { headers: { "Content-Type": "application/json" } }
     );
     if (response.status != 200 && response.status != 201) {
-      throw Error(`Failed to login: ${response.data}`);
+      throw new Error(`Failed to login: ${response.data}`);
     } else {
       return response.data;
     }
@@ -23,11 +23,39 @@ export const login = async (
 
 export const googleLogin = async (
   googleToken: string
-): Promise<GoogleLoginResponse> => {
-  const response = await axiosInstance.post<GoogleLoginResponse>(
-    "/auth/google",
-    { idToken: googleToken }
-  );
+): Promise<LoginResponse> => {
+  try {
+    const response = await axiosInstance.post<LoginResponse>(
+      "/auth/google",
+      {
+        idToken: googleToken,
+      },
+      { headers: { "Content-Type": "application/json" } }
+    );
+    if (response.status != 200 && response.status != 201) {
+      throw new Error(`Google login failed: ${response.data}`);
+    } else {
+      return response.data;
+    }
+  } catch (error: any) {
+    console.log(error);
+    throw error;
+  }
+};
 
-  return response.data;
+export const facebookLogin = async (): Promise<LoginResponse> => {
+  try {
+    const response = await axiosInstance.get<LoginResponse>(
+      "/auth/facebook/callback",
+      { headers: { "Content-Type": "application/json" } }
+    );
+    if (response.status !== 200 && response.status !== 201) {
+      throw new Error(`Facebook login failed: ${response.statusText}`);
+    } else {
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
 };

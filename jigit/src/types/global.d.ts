@@ -8,7 +8,7 @@ interface Window {
   google: any;
 }
 
-interface GoogleLoginResponse {
+interface LoginResponse {
   token: string;
   user: User;
 }
