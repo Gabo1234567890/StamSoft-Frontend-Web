@@ -4,13 +4,14 @@ import { useAuth } from "../context/AuthContext";
 import GoogleLoginButton from "../components/GoogleLoginButton";
 import FacebookLoginButton from "../components/FacebookLoginButton";
 import { login } from "../services/login";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ForgottenPasswordButton from "./components/ForgottenPasswordButton";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { contextLogin } = useAuth();
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     if (!email.includes("@") || !email.includes(".")) {
@@ -26,6 +27,7 @@ const LoginPage = () => {
       const response = await login(email, password);
       const { accessToken, refreshToken, user } = response;
       contextLogin({ accessToken, refreshToken, userId: user.id });
+      navigate("/");
     } catch (error: any) {
       console.log(error);
       alert(error);

@@ -6,7 +6,6 @@ import {
   type ReactNode,
 } from "react";
 import axiosInstance from "../services/Axios";
-import { useNavigate } from "react-router";
 import { handleLogout } from "../services/logout";
 import Cookies from "js-cookie";
 
@@ -33,7 +32,6 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const navigate = useNavigate();
   const [accessToken, setAccessToken] = useState<string | null>(
     Cookies.get("accessToken") || null
   );
@@ -91,7 +89,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     Cookies.set("accessToken", accessToken);
     Cookies.set("refreshToken", refreshToken);
     Cookies.set("userId", userId.toString());
-    navigate("/");
   };
 
   const logout = async () => {
@@ -99,7 +96,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     Cookies.remove("accessToken");
     Cookies.remove("refreshToken");
     Cookies.remove("userId");
-    navigate("/login");
   };
 
   return (

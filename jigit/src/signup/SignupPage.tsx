@@ -4,7 +4,7 @@ import { signup } from "../services/signup";
 import TextInput from "../components/TextInput";
 import GoogleLoginButton from "../components/GoogleLoginButton";
 import FacebookLoginButton from "../components/FacebookLoginButton";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignupPage = () => {
   const [email, setEmail] = useState("");
@@ -15,6 +15,7 @@ const SignupPage = () => {
   const [model, setModel] = useState("");
   const [licensePlate, setLicensePlate] = useState("");
   const { setAuth } = useAuth();
+  const navigate = useNavigate();
 
   const handleSignup = async () => {
     if (!email.includes("@") || !email.includes(".")) {
@@ -42,8 +43,8 @@ const SignupPage = () => {
         };
       }
       const { accessToken, refreshToken, user } = await signup(payload);
-      console.log(accessToken, refreshToken);
       setAuth(accessToken, refreshToken, user);
+      navigate("/");
     } catch (error) {
       console.log(error);
       alert(error);

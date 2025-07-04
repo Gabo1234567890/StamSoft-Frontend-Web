@@ -25,6 +25,9 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
+    if (error.config.url === "/auth/login") {
+      return error;
+    }
     const refreshToken = Cookies.get("refreshToken");
     const userId = Number(Cookies.get("userId"));
     const originalRequest = error.config;
@@ -48,6 +51,7 @@ axiosInstance.interceptors.response.use(
       } catch (refreshError) {
         Cookies.remove("accessToken");
         Cookies.remove("refreshToken");
+        window.location.href = "/login";
         return Promise.reject(refreshError);
       }
     }

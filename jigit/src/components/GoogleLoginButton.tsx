@@ -36,7 +36,7 @@ const GoogleLoginButton = () => {
       theme: "outline",
       size: "large",
     });
-  });
+  }, []);
 
   return <div ref={divRef}></div>;
 };

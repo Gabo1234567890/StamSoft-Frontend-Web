@@ -63,7 +63,7 @@ export const facebookLogin = async (): Promise<LoginResponse> => {
 export const forgotPassword = async (email: string): Promise<void> => {
   try {
     const response = await axiosInstance.post(
-      "/auth/forgotten-password",
+      "/auth/forgot-password",
       {
         email,
       },
@@ -79,13 +79,13 @@ export const forgotPassword = async (email: string): Promise<void> => {
 };
 
 export const resetPassword = async (
-  newPassword: string,
+  password: string,
   token: string
 ): Promise<void> => {
   try {
     const response = await axiosInstance.post(
       "auth/reset-password",
-      { token, newPassword },
+      { token, password },
       { headers: { "Content-Type": "application/json" } }
     );
     if (response.status !== 200 && response.status !== 201) {
