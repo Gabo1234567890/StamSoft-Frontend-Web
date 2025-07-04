@@ -31,3 +31,11 @@ interface SignupDetails {
   lastName?: string | null;
   car?: Car | null;
 }
+
+interface Report {
+  file: File;
+  description: string;
+  licensePlate: string;
+  latitude: number;
+  longtitude: number;
+}
