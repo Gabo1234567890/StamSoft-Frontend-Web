@@ -96,3 +96,20 @@ export const resetPassword = async (
     throw error;
   }
 };
+
+export const refresh = async (id: number, refreshToken: string) => {
+  try {
+    const response = await axiosInstance.post(
+      "/auth/refresh",
+      { id, refreshToken },
+      { headers: { "Content-Type": "application/json" } }
+    );
+    if (response.status !== 200 && response.status !== 201) {
+      throw new Error(`Failed to refresh token: ${response.statusText}`);
+    }
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

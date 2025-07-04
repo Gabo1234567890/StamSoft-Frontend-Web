@@ -1,5 +1,5 @@
 interface User {
-  id: string;
+  id: number;
   email: string;
   password: string;
 }
@@ -10,6 +10,7 @@ interface Window {
 
 interface LoginResponse {
   accessToken: string;
+  refreshToken: string;
   user: User;
 }
 

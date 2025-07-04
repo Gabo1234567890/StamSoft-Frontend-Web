@@ -41,9 +41,9 @@ const SignupPage = () => {
           licensePlate: licensePlate,
         };
       }
-      const { accessToken, user } = await signup(payload);
-      console.log(accessToken, user);
-      setAuth(accessToken, user);
+      const { accessToken, refreshToken, user } = await signup(payload);
+      console.log(accessToken, refreshToken);
+      setAuth(accessToken, refreshToken, user);
     } catch (error) {
       console.log(error);
       alert(error);

@@ -7,7 +7,8 @@ const GoogleLoginButton = () => {
   const handleGoogleLogin = async (googleToken: string) => {
     try {
       const response = await googleLogin(googleToken);
-      setAuth(response.accessToken, response.user);
+      console.log(response);
+      setAuth(response.accessToken, response.refreshToken, response.user);
     } catch (error) {
       console.log(error);
       alert(error);
