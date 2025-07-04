@@ -1,7 +1,8 @@
 import axiosInstance from "./Axios";
 
 export const uploadReport = async ({
-  file,
+  imageUrls,
+  videoUrl,
   description,
   licensePlate,
   latitude,
@@ -11,7 +12,8 @@ export const uploadReport = async ({
     const response = await axiosInstance.post(
       "/reports/upload",
       {
-        file,
+        imageUrls,
+        videoUrl,
         description,
         licensePlate,
         latitude,

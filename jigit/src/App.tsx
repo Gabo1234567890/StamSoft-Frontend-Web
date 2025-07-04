@@ -5,6 +5,7 @@ import AuthGuard from "./guards/AuthGuard";
 import SignupPage from "./signup/SignupPage";
 import LogoutButton from "./components/LogoutButton";
 import ResetPasswordPage from "./login/ResetPasswordPage";
+import ProfilePage from "./profile/ProfilePage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
               </>
             }
           />
+          <Route path="/profile" element={<ProfilePage />} />
         </Route>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />

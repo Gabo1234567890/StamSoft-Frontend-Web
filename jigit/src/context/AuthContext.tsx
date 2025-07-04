@@ -13,6 +13,7 @@ interface AuthContextType {
   user: User | null;
   accessToken: string | null;
   refreshToken: string | null;
+  loading: boolean;
   setAuth: (accessToken: string, refreshToken: string, user: User) => void;
   clearAuth: () => void;
   refreshAuth: () => Promise<void>;
@@ -38,6 +39,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [refreshToken, setRefreshToken] = useState<string | null>(
     Cookies.get("refreshToken") || null
   );
+  const [loading, setLoading] = useState(true);
 
   const setAuth = (accessToken: string, refreshToken: string, user: User) => {
     Cookies.set("accessToken", accessToken);
@@ -70,6 +72,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setUser(response.data);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -102,6 +106,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     <AuthContext.Provider
       value={{
         user,
+        loading,
         refreshAuth,
         contextLogin,
         logout,

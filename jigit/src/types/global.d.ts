@@ -33,9 +33,13 @@ interface SignupDetails {
 }
 
 interface Report {
-  file: File;
+  id: number;
+  imageUrls: string[];
+  videoUrl?: string | null;
   description: string;
   licensePlate: string;
   latitude: number;
   longtitude: number;
+  createdAt: string;
+  reportedBy: { id: number; email: string };
 }
