@@ -10,7 +10,7 @@ import ForgottenPasswordButton from "./components/ForgottenPasswordButton";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { setAuth } = useAuth();
+  const { contextLogin } = useAuth();
 
   const handleLogin = async () => {
     if (!email.includes("@") || !email.includes(".")) {
@@ -23,9 +23,9 @@ const LoginPage = () => {
       alert("Invalid password");
     }
     try {
-      const { user, accessToken, refreshToken } = await login(email, password);
-      console.log(accessToken, refreshToken);
-      setAuth(accessToken, refreshToken, user);
+      const response = await login(email, password);
+      const { accessToken, refreshToken, user } = response;
+      contextLogin({ accessToken, refreshToken, userId: user.id });
     } catch (error: any) {
       console.log(error);
       alert(error);

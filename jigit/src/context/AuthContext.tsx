@@ -6,6 +6,8 @@ import {
   type ReactNode,
 } from "react";
 import axiosInstance from "../services/Axios";
+import { useNavigate } from "react-router";
+import { handleLogout } from "../services/logout";
 import Cookies from "js-cookie";
 
 interface AuthContextType {
@@ -15,12 +17,23 @@ interface AuthContextType {
   setAuth: (accessToken: string, refreshToken: string, user: User) => void;
   clearAuth: () => void;
   refreshAuth: () => Promise<void>;
+  contextLogin: ({
+    accessToken,
+    refreshToken,
+    userId,
+  }: {
+    accessToken: string;
+    refreshToken: string;
+    userId: number;
+  }) => void;
+  logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  const navigate = useNavigate();
   const [accessToken, setAccessToken] = useState<string | null>(
     Cookies.get("accessToken") || null
   );
@@ -66,15 +79,40 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     refreshAuth();
   }, []);
 
+  const contextLogin = ({
+    accessToken,
+    refreshToken,
+    userId,
+  }: {
+    accessToken: string;
+    refreshToken: string;
+    userId: number;
+  }) => {
+    Cookies.set("accessToken", accessToken);
+    Cookies.set("refreshToken", refreshToken);
+    Cookies.set("userId", userId.toString());
+    navigate("/");
+  };
+
+  const logout = async () => {
+    await handleLogout();
+    Cookies.remove("accessToken");
+    Cookies.remove("refreshToken");
+    Cookies.remove("userId");
+    navigate("/login");
+  };
+
   return (
     <AuthContext.Provider
       value={{
         user,
+        refreshAuth,
+        contextLogin,
+        logout,
         accessToken,
         refreshToken,
         setAuth,
         clearAuth,
-        refreshAuth,
       }}
     >
       {children}
