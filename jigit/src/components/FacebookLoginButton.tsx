@@ -6,7 +6,8 @@ const FacebookLoginButton = () => {
   const handleFacebookLogin = async () => {
     try {
       const response = await facebookLogin();
-      setAuth(response.token, response.user);
+      console.log(response);
+      setAuth(response.accessToken, response.refreshToken, response.user);
     } catch (error) {
       console.log(error);
       alert(error);

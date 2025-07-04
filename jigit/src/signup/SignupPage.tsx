@@ -27,15 +27,23 @@ const SignupPage = () => {
       alert("Invalid password");
     }
     try {
-      const car: Car = { brand, model, licensePlate };
-      const { token, user } = await signup({
-        email,
-        password,
-        firstName,
-        lastName,
-        car,
-      });
-      setAuth(token, user);
+      const payload: SignupDetails = { email, password };
+      if (firstName) {
+        payload.firstName = firstName;
+      }
+      if (lastName) {
+        payload.lastName = lastName;
+      }
+      if (brand && model && licensePlate) {
+        payload.car = {
+          brand: brand,
+          model: model,
+          licensePlate: licensePlate,
+        };
+      }
+      const { accessToken, refreshToken, user } = await signup(payload);
+      console.log(accessToken, refreshToken);
+      setAuth(accessToken, refreshToken, user);
     } catch (error) {
       console.log(error);
       alert(error);

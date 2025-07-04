@@ -2,12 +2,12 @@ import axiosInstance from "./Axios";
 
 export const login = async (
   email: string,
-  pass: string
+  password: string
 ): Promise<LoginResponse> => {
   try {
     const response = await axiosInstance.post(
       "/auth/login",
-      { email, pass },
+      { email, password },
       { headers: { "Content-Type": "application/json" } }
     );
     if (response.status != 200 && response.status != 201) {
@@ -91,6 +91,23 @@ export const resetPassword = async (
     if (response.status !== 200 && response.status !== 201) {
       throw new Error(`Failed to send reset email: ${response.statusText}`);
     }
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const refresh = async (id: number, refreshToken: string) => {
+  try {
+    const response = await axiosInstance.post(
+      "/auth/refresh",
+      { id, refreshToken },
+      { headers: { "Content-Type": "application/json" } }
+    );
+    if (response.status !== 200 && response.status !== 201) {
+      throw new Error(`Failed to refresh token: ${response.statusText}`);
+    }
+    return response.data;
   } catch (error) {
     console.log(error);
     throw error;

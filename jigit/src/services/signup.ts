@@ -22,6 +22,7 @@ export const signup = async ({
     if (response.status != 200 && response.status != 201) {
       throw new Error(`Failed to signup: ${response.data}`);
     } else {
+      console.log(response.data);
       return response.data;
     }
   } catch (error) {

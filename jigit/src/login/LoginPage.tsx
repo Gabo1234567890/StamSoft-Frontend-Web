@@ -23,8 +23,9 @@ const LoginPage = () => {
       alert("Invalid password");
     }
     try {
-      const { user, token } = await login(email, password);
-      setAuth(token, user);
+      const { user, accessToken, refreshToken } = await login(email, password);
+      console.log(accessToken, refreshToken);
+      setAuth(accessToken, refreshToken, user);
     } catch (error: any) {
       console.log(error);
       alert(error);
