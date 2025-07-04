@@ -1,5 +1,5 @@
 interface User {
-  id: string;
+  id: number;
   email: string;
   password: string;
 }
@@ -9,7 +9,8 @@ interface Window {
 }
 
 interface LoginResponse {
-  token: string;
+  accessToken: string;
+  refreshToken: string;
   user: User;
 }
 
@@ -29,4 +30,12 @@ interface SignupDetails {
   firstName?: string | null;
   lastName?: string | null;
   car?: Car | null;
+}
+
+interface Report {
+  file: File;
+  description: string;
+  licensePlate: string;
+  latitude: number;
+  longtitude: number;
 }

@@ -8,11 +8,13 @@ import {
 import axiosInstance from "../services/Axios";
 import { useNavigate } from "react-router";
 import { handleLogout } from "../services/logout";
+import Cookies from "js-cookie";
 
 interface AuthContextType {
   user: User | null;
-  token: string | null;
-  setAuth: (token: string, user: User) => void;
+  accessToken: string | null;
+  refreshToken: string | null;
+  setAuth: (accessToken: string, refreshToken: string, user: User) => void;
   clearAuth: () => void;
   refreshAuth: () => Promise<void>;
   contextLogin: ({
@@ -30,28 +32,46 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [token, setToken] = useState<string | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const navigate = useNavigate();
+  const [accessToken, setAccessToken] = useState<string | null>(
+    Cookies.get("accessToken") || null
+  );
+  const [refreshToken, setRefreshToken] = useState<string | null>(
+    Cookies.get("refreshToken") || null
+  );
 
-  const setAuth = (token: string, user: User) => {
-    setToken(token);
+  const setAuth = (accessToken: string, refreshToken: string, user: User) => {
+    Cookies.set("accessToken", accessToken);
+    Cookies.set("refreshToken", refreshToken);
+    Cookies.set("userId", user.id.toString());
+    setAccessToken(accessToken);
+    setRefreshToken(refreshToken);
     setUser(user);
   };
 
   const clearAuth = () => {
-    setToken(null);
+    Cookies.remove("accessToken");
+    Cookies.remove("refreshToken");
+    setAccessToken(null);
+    setRefreshToken(null);
     setUser(null);
   };
 
   const refreshAuth = async () => {
-    try {
-      const response = await axiosInstance.get<{ token: string; user: User }>(
-        "/me"
-      );
-      setAuth(response.data.token, response.data.user);
-    } catch (error) {
+    const storedAcessToken = Cookies.get("accessToken");
+    const storedRefreshToken = Cookies.get("refreshToken");
+    if (!storedAcessToken || !storedRefreshToken) {
       clearAuth();
+      return;
+    }
+    setAccessToken(storedAcessToken);
+    setRefreshToken(storedRefreshToken);
+    try {
+      const response = await axiosInstance.get<User>("/user/profile");
+      setUser(response.data);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -86,12 +106,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     <AuthContext.Provider
       value={{
         user,
-        token,
-        setAuth,
-        clearAuth,
         refreshAuth,
         contextLogin,
         logout,
+        accessToken,
+        refreshToken,
+        setAuth,
+        clearAuth,
       }}
     >
       {children}
