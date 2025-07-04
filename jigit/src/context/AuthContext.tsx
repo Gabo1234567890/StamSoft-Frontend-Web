@@ -6,6 +6,8 @@ import {
   type ReactNode,
 } from "react";
 import axiosInstance from "../services/Axios";
+import { useNavigate } from "react-router";
+import { handleLogout } from "../services/logout";
 
 interface AuthContextType {
   user: User | null;
@@ -13,6 +15,16 @@ interface AuthContextType {
   setAuth: (token: string, user: User) => void;
   clearAuth: () => void;
   refreshAuth: () => Promise<void>;
+  contextLogin: ({
+    accessToken,
+    refreshToken,
+    userId,
+  }: {
+    accessToken: string;
+    refreshToken: string;
+    userId: number;
+  }) => void;
+  logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -20,6 +32,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [token, setToken] = useState<string | null>(null);
   const [user, setUser] = useState<User | null>(null);
+  const navigate = useNavigate();
 
   const setAuth = (token: string, user: User) => {
     setToken(token);
@@ -46,9 +59,40 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     refreshAuth();
   }, []);
 
+  const contextLogin = ({
+    accessToken,
+    refreshToken,
+    userId,
+  }: {
+    accessToken: string;
+    refreshToken: string;
+    userId: number;
+  }) => {
+    Cookies.set("accessToken", accessToken);
+    Cookies.set("refreshToken", refreshToken);
+    Cookies.set("userId", userId.toString());
+    navigate("/");
+  };
+
+  const logout = async () => {
+    await handleLogout();
+    Cookies.remove("accessToken");
+    Cookies.remove("refreshToken");
+    Cookies.remove("userId");
+    navigate("/login");
+  };
+
   return (
     <AuthContext.Provider
-      value={{ user, token, setAuth, clearAuth, refreshAuth }}
+      value={{
+        user,
+        token,
+        setAuth,
+        clearAuth,
+        refreshAuth,
+        contextLogin,
+        logout,
+      }}
     >
       {children}
     </AuthContext.Provider>
