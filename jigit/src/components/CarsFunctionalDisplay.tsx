@@ -101,24 +101,20 @@ const CarsFunctionalDisplay = ({ cars }: { cars: Car[] }) => {
 
         const handlePatchCar = async () => {
           try {
-            if (!carId) {
-              throw new Error("No matching cars");
-            } else {
-              const response = await patchCarByID(carId, {
-                model: carsInfo[carId].model,
-                brand: carsInfo[carId].brand,
-                licensePlate: carsInfo[carId].licensePlate,
-              });
-              setUser((prevUser) => {
-                if (!prevUser || !prevUser.cars) return prevUser;
-                const index = prevUser.cars.indexOf(car);
-                prevUser.cars[index] = response;
-                return {
-                  ...prevUser,
-                  cars: [...(prevUser.cars || [])],
-                };
-              });
-            }
+            const response = await patchCarByID(carId, {
+              model: carsInfo[carId].model,
+              brand: carsInfo[carId].brand,
+              licensePlate: carsInfo[carId].licensePlate,
+            });
+            setUser((prevUser) => {
+              if (!prevUser || !prevUser.cars) return prevUser;
+              const index = prevUser.cars.indexOf(car);
+              prevUser.cars[index] = response;
+              return {
+                ...prevUser,
+                cars: [...(prevUser.cars || [])],
+              };
+            });
           } catch (error) {
             console.log(error);
             alert(error);
@@ -127,26 +123,22 @@ const CarsFunctionalDisplay = ({ cars }: { cars: Car[] }) => {
 
         const handleDeleteCar = async () => {
           try {
-            if (!car.id) {
-              throw new Error("No matching car");
-            } else {
-              await deleteCarByID(car.id);
-              setUser((prevUser) => {
-                if (!prevUser || !prevUser.cars) return prevUser;
-                prevUser.cars.splice(prevUser.cars.indexOf(car), 1);
-                return {
-                  ...prevUser,
-                  cars: [...(prevUser.cars || [])],
-                };
-              });
-            }
+            await deleteCarByID(carId);
+            setUser((prevUser) => {
+              if (!prevUser || !prevUser.cars) return prevUser;
+              prevUser.cars.splice(prevUser.cars.indexOf(car), 1);
+              return {
+                ...prevUser,
+                cars: [...(prevUser.cars || [])],
+              };
+            });
           } catch (error) {
             console.log(error);
             alert(error);
           }
         };
         return (
-          <div key={car.id}>
+          <div key={carId}>
             <p>{car.brand}</p>
             <p>{car.model}</p>
             <p>{car.licensePlate}</p>
@@ -156,7 +148,7 @@ const CarsFunctionalDisplay = ({ cars }: { cars: Car[] }) => {
               onChange={(val) =>
                 setInitialInputData(carId, "brand", val.toString())
               }
-              val={carsInfo[car.id].brand}
+              val={carsInfo[carId].brand}
             />
             <TextInput
               placeholder="Model"
@@ -164,7 +156,7 @@ const CarsFunctionalDisplay = ({ cars }: { cars: Car[] }) => {
               onChange={(val) =>
                 setInitialInputData(carId, "model", val.toString())
               }
-              val={carsInfo[car.id].model}
+              val={carsInfo[carId].model}
             />
             <TextInput
               placeholder="License Plate"
@@ -172,7 +164,7 @@ const CarsFunctionalDisplay = ({ cars }: { cars: Car[] }) => {
               onChange={(val) =>
                 setInitialInputData(carId, "licensePlate", val.toString())
               }
-              val={carsInfo[car.id].licensePlate}
+              val={carsInfo[carId].licensePlate}
             />
             <button onClick={handlePatchCar}>Update car information</button>
             <button onClick={handleDeleteCar}>Delete car</button>
