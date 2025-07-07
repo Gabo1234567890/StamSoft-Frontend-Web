@@ -1,32 +1,54 @@
-import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
-import { deleteCarByID, patchCarByID } from "../services/cars";
-import Report from "./Report";
+import { useEffect, useState } from "react";
+import { addCar, deleteCarByID, patchCarByID } from "../services/cars";
+import { useAuth } from "../context/AuthContext";
 import TextInput from "./TextInput";
-const UserDisplay = ({
-  user,
-  setUser,
-}: {
-  user: User;
-  setUser: Dispatch<SetStateAction<User | null>>;
-}) => {
+
+const CarsFunctionalDisplay = ({ cars }: { cars: Car[] }) => {
   const [brand, setBrand] = useState("");
   const [model, setModel] = useState("");
   const [licensePlate, setLicensePlate] = useState("");
+  const { setUser } = useAuth();
+
   useEffect(() => {
-    user.cars?.map((car) => {
+    cars.map((car) => {
       setBrand(car.brand);
       setModel(car.model);
       setLicensePlate(car.licensePlate);
     });
   }, []);
 
-  const cars = user.cars;
-  const reports = user.reports;
+  const handleAddCar = async () => {
+    try {
+      if (!brand || !model || !licensePlate) {
+        alert("Brand, model and license plate should not be empty");
+      } else {
+        const response = await addCar({ brand, model, licensePlate });
+        setUser((prevUser) => {
+          if (!prevUser) return prevUser;
+
+          return {
+            ...prevUser,
+            cars: [...(prevUser.cars || []), response],
+          };
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      alert(error);
+    }
+  };
+
   return (
     <>
-      <p>{user.email}</p>
-      <p>{user.firstName}</p>
-      <p>{user.lastName}</p>
+      <TextInput placeholder="Brand" type="text" onChange={setBrand} />
+      <TextInput placeholder="Model" type="text" onChange={setModel} />
+      <TextInput
+        placeholder="License Plate"
+        type="text"
+        onChange={setLicensePlate}
+      />
+      <button onClick={handleAddCar}>Add a Car</button>
+
       {cars?.map((car, index) => {
         const handlePatchCar = async () => {
           try {
@@ -34,11 +56,15 @@ const UserDisplay = ({
             if (!carId) {
               throw new Error("No matching cars");
             } else {
-              await patchCarByID(carId, { model, brand, licensePlate });
+              const response = await patchCarByID(carId, {
+                model,
+                brand,
+                licensePlate,
+              });
               setUser((prevUser) => {
                 if (!prevUser || !prevUser.cars) return prevUser;
-                let index = prevUser.cars.indexOf(car);
-                prevUser.cars[index] = { model, brand, licensePlate };
+                const index = prevUser.cars.indexOf(car);
+                prevUser.cars[index] = response;
                 return {
                   ...prevUser,
                   cars: [...(prevUser.cars || [])],
@@ -99,12 +125,8 @@ const UserDisplay = ({
           </div>
         );
       })}
-
-      {reports?.map((report, index) => {
-        return <Report report={report} key={index} />;
-      })}
     </>
   );
 };
 
-export default UserDisplay;
+export default CarsFunctionalDisplay;
