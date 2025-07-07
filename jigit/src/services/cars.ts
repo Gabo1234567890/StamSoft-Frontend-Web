@@ -4,7 +4,7 @@ export const addCar = async ({
   brand,
   model,
   licensePlate,
-}: Car): Promise<void> => {
+}: Car): Promise<Car> => {
   try {
     const response = await axiosInstance.post(
       "/car",
@@ -14,6 +14,7 @@ export const addCar = async ({
     if (response.status != 200 && response.status != 201) {
       throw new Error("Car creation failed");
     }
+    return response.data;
   } catch (error) {
     console.log(error);
     throw error;
@@ -23,7 +24,7 @@ export const addCar = async ({
 export const patchCarByID = async (
   id: number,
   { model, brand, licensePlate }: Car
-): Promise<void> => {
+): Promise<Car> => {
   try {
     const response = await axiosInstance.patch(
       `/car/${id}`,
@@ -33,6 +34,7 @@ export const patchCarByID = async (
     if (response.status != 200 && response.status != 201) {
       throw new Error("Car update failed");
     }
+    return response.data;
   } catch (error) {
     console.log(error);
     throw error;

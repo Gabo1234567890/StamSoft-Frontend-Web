@@ -6,7 +6,7 @@ export const uploadReport = async ({
   description,
   licensePlate,
   latitude,
-  longtitude,
+  longitude,
 }: Report): Promise<void> => {
   try {
     const response = await axiosInstance.post(
@@ -17,7 +17,7 @@ export const uploadReport = async ({
         description,
         licensePlate,
         latitude,
-        longtitude,
+        longitude,
       },
       { headers: { "Content-Type": "application/json" } }
     );
