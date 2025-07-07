@@ -3,7 +3,9 @@ import {
   useContext,
   useEffect,
   useState,
+  type Dispatch,
   type ReactNode,
+  type SetStateAction,
 } from "react";
 import axiosInstance from "../services/Axios";
 import { handleLogout } from "../services/logout";
@@ -27,6 +29,7 @@ interface AuthContextType {
     userId: number;
   }) => void;
   logout: () => void;
+  setUser: Dispatch<SetStateAction<User | null>>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -114,6 +117,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         refreshToken,
         setAuth,
         clearAuth,
+        setUser,
       }}
     >
       {children}

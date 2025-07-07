@@ -1,10 +1,9 @@
 const Report = ({ report }: { report: Report }) => {
-  console.log(report);
   const images = report?.imageUrls;
   return (
     <>
-      {images.map((imageUrl) => {
-        return <img src={imageUrl} alt="image" />;
+      {images.map((imageUrl, index) => {
+        return <img src={imageUrl} alt="image" key={index} />;
       })}
       {report.videoUrl ? (
         <video>
@@ -13,8 +12,8 @@ const Report = ({ report }: { report: Report }) => {
       ) : null}
       <p>{report?.description}</p>
       <p>{report?.licensePlate}</p>
-      <p>{report?.longtitude}</p>
-      <p>{report?.longtitude}</p>
+      <p>{report?.latitude}</p>
+      <p>{report?.longitude}</p>
       <p>{report?.createdAt}</p>
       <p>{report?.reportedBy?.email}</p>
     </>

@@ -28,7 +28,7 @@ export const patchCarByID = async (
     const response = await axiosInstance.patch(
       `/car/${id}`,
       { model, brand, licensePlate },
-      { params: id, headers: { "Content-Type": "application/json" } }
+      { headers: { "Content-Type": "application/json" } }
     );
     if (response.status != 200 && response.status != 201) {
       throw new Error("Car update failed");
@@ -42,7 +42,6 @@ export const patchCarByID = async (
 export const deleteCarByID = async (id: number): Promise<void> => {
   try {
     const response = await axiosInstance.delete(`/car/${id}`, {
-      params: id,
       headers: { "Content-Type": "application/json" },
     });
     if (response.status != 200 && response.status != 201) {

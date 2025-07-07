@@ -2,6 +2,10 @@ interface User {
   id: number;
   email: string;
   password: string;
+  firstName?: string;
+  lastName?: string;
+  cars?: Car[];
+  reports?: Report[];
 }
 
 interface Window {
@@ -19,6 +23,7 @@ interface GoogleCredentialsResponse {
 }
 
 interface Car {
+  id?: number;
   brand: string;
   model: string;
   licensePlate: string;
@@ -39,7 +44,7 @@ interface Report {
   description: string;
   licensePlate: string;
   latitude: number;
-  longtitude: number;
+  longitude: number;
   createdAt: string;
   reportedBy: { id: number; email: string };
 }
