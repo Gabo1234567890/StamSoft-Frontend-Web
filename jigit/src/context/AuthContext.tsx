@@ -96,6 +96,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     Cookies.set("accessToken", accessToken);
     Cookies.set("refreshToken", refreshToken);
     Cookies.set("userId", userId.toString());
+    refreshAuth();
   };
 
   const logout = async () => {

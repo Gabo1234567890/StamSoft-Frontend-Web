@@ -6,6 +6,7 @@ import SignupPage from "./signup/SignupPage";
 import LogoutButton from "./components/LogoutButton";
 import ResetPasswordPage from "./login/ResetPasswordPage";
 import ProfilePage from "./profile/ProfilePage";
+import HomePage from "./home/HomePage";
 
 function App() {
   return (
@@ -16,11 +17,19 @@ function App() {
             path="/"
             element={
               <>
-                <LogoutButton /> <p>Home Page</p>
+                <LogoutButton /> <HomePage />
               </>
             }
           />
-          <Route path="/profile" element={<ProfilePage />} />
+          <Route
+            path="/profile"
+            element={
+              <>
+                <LogoutButton />
+                <ProfilePage />
+              </>
+            }
+          />
         </Route>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
