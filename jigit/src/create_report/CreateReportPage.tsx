@@ -1,17 +1,25 @@
 import { useState, type ChangeEvent } from "react";
 import { uploadReport } from "../services/reports";
 import TextInput from "../components/TextInput";
+import LocationPicker from "../components/LocationPicker";
 
 const CreateReportPage = () => {
   const [description, setDescription] = useState("");
   const [licensePlates, setLicensePlates] = useState<string[]>([]);
-  const [latitude, setLatitude] = useState("");
-  const [longitude, setLongitude] = useState("");
+  const [latitude, setLatitude] = useState<number | null>(null);
+  const [longitude, setLongitude] = useState<number | null>(null);
+  const [address, setAddress] = useState("");
   const [images, setImages] = useState<File[]>([]);
   const [video, setVideo] = useState<File | null>(null);
   const [licensePlateInput, setLicensePlateInput] = useState("");
   const [imagePreviewUrls, setImagePreviewUrls] = useState<string[]>([]);
   const [videoPreview, setVideoPreview] = useState<string | null>(null);
+
+  const handleLocationChange = (lat: number, lng: number, addr: string) => {
+    setLatitude(lat);
+    setLongitude(lng);
+    setAddress(addr);
+  };
 
   const handleUpload = async () => {
     try {
@@ -28,8 +36,8 @@ const CreateReportPage = () => {
       await uploadReport({
         description,
         licensePlates,
-        latitude,
-        longitude,
+        latitude: latitude.toString(),
+        longitude: longitude.toString(),
         images,
         video,
       });
@@ -137,6 +145,18 @@ const CreateReportPage = () => {
       ) : (
         <input type="file" accept="video/*" onChange={handleVideoChange} />
       )}
+
+      <>
+        <h3>Select Location</h3>
+        <LocationPicker onLocationChange={handleLocationChange} />
+        {latitude && longitude && (
+          <p>
+            Address: {address}
+            <br />
+            Coordinates: {latitude}, {longitude}
+          </p>
+        )}
+      </>
 
       <button onClick={handleUpload}>Submit Report</button>
     </>
