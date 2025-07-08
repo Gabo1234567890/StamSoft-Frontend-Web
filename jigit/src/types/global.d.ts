@@ -42,7 +42,7 @@ interface Report {
   imageUrls: string[];
   videoUrl?: string | null;
   description: string;
-  licensePlate: string;
+  licensePlates: string[];
   latitude: number;
   longitude: number;
   createdAt: string;

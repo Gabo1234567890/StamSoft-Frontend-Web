@@ -25,6 +25,7 @@ const HomePage = () => {
   return (
     <>
       <Link to={"/profile"}>Profile</Link>
+      <Link to={"/create-report"}>Create Report</Link>
       <SearchReportsBar
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}

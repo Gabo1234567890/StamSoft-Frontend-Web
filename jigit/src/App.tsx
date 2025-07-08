@@ -7,6 +7,7 @@ import LogoutButton from "./components/LogoutButton";
 import ResetPasswordPage from "./login/ResetPasswordPage";
 import ProfilePage from "./profile/ProfilePage";
 import HomePage from "./home/HomePage";
+import CreateReportPage from "./create_report/CreateReportPage";
 
 function App() {
   return (
@@ -27,6 +28,15 @@ function App() {
               <>
                 <LogoutButton />
                 <ProfilePage />
+              </>
+            }
+          />
+          <Route
+            path="/create-report"
+            element={
+              <>
+                <LogoutButton />
+                <CreateReportPage />
               </>
             }
           />

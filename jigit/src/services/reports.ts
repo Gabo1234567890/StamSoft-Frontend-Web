@@ -1,23 +1,34 @@
 import axiosInstance from "./Axios";
 
 export const uploadReport = async ({
-  imageUrls,
-  videoUrl,
   description,
-  licensePlate,
+  licensePlates,
   latitude,
   longitude,
-}: Report): Promise<void> => {
+  images,
+  video,
+}: {
+  description: string;
+  licensePlates: string[];
+  latitude: string;
+  longitude: string;
+  images: File[];
+  video: File | null;
+}): Promise<void> => {
+  const formData = new FormData();
+
+  formData.append("description", description);
+  licensePlates.forEach((plate) => formData.append("licensePlate", plate));
+  formData.append("latitude", latitude.toString());
+  formData.append("longitude", longitude.toString());
+  images.forEach((file) => formData.append("files", file));
+  if (video) formData.append("files", video);
+
   try {
     const response = await axiosInstance.post(
       "/reports/upload",
       {
-        imageUrls,
-        videoUrl,
-        description,
-        licensePlate,
-        latitude,
-        longitude,
+        formData,
       },
       { headers: { "Content-Type": "application/json" } }
     );

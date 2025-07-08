@@ -11,7 +11,7 @@ const Report = ({ report }: { report: Report }) => {
         </video>
       ) : null}
       <p>{report?.description}</p>
-      <p>{report?.licensePlate}</p>
+      <ul>{report?.licensePlates}</ul>
       <p>{report?.latitude}</p>
       <p>{report?.longitude}</p>
       <p>{report?.createdAt}</p>
