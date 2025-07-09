@@ -3,6 +3,7 @@ import { uploadReport } from "../services/reports";
 import TextInput from "../components/TextInput";
 import LocationPicker from "../components/LocationPicker";
 import { useAuth } from "../context/AuthContext";
+import { useDropzone } from "react-dropzone";
 
 const CreateReportPage = () => {
   const [description, setDescription] = useState("");
@@ -67,19 +68,16 @@ const CreateReportPage = () => {
     }
   };
 
-  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const newFiles = Array.from(e.target.files).filter((f) =>
-        f.type.startsWith("image/")
-      );
-      const combinedFiles = [...images, ...newFiles].slice(0, 5);
-      setImages(combinedFiles);
+  const onDropImages = (acceptedFiles: File[]) => {
+    const newImageFiles = acceptedFiles.filter((file) =>
+      file.type.startsWith("image/")
+    );
 
-      const newPreviews = newFiles.map((file) => URL.createObjectURL(file));
-      setImagePreviewUrls((prev) => [...prev, ...newPreviews].slice(0, 5));
+    const combinedFiles = [...images, ...newImageFiles].slice(0, 5);
+    setImages(combinedFiles);
 
-      e.target.value = "";
-    }
+    const newPreviews = newImageFiles.map((file) => URL.createObjectURL(file));
+    setImagePreviewUrls((prev) => [...prev, ...newPreviews].slice(0, 5));
   };
 
   const removeImage = (index: number) => {
@@ -92,14 +90,13 @@ const CreateReportPage = () => {
     setImagePreviewUrls(newPreviews);
   };
 
-  const handleVideoChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]?.type.startsWith("video/")) {
-      const videoFile = e.target.files[0];
+  const onDropVideo = (acceptedFiles: File[]) => {
+    const videoFile = acceptedFiles.find((file) =>
+      file.type.startsWith("video/")
+    );
+    if (videoFile && !video) {
       setVideo(videoFile);
       setVideoPreview(URL.createObjectURL(videoFile));
-    } else {
-      setVideo(null);
-      setVideoPreview(null);
     }
   };
 
@@ -117,6 +114,28 @@ const CreateReportPage = () => {
       setLicensePlateInput("");
     }
   };
+
+  const {
+    getRootProps: getImageRootProps,
+    getInputProps: getImageInputProps,
+    isDragActive: isImageDragActive,
+  } = useDropzone({
+    onDrop: onDropImages,
+    accept: { "image/*": [] },
+    multiple: true,
+    maxFiles: 5 - images.length,
+  });
+
+  const {
+    getRootProps: getVideoRootProps,
+    getInputProps: getVideoInputProps,
+    isDragActive: isVideoDragActive,
+  } = useDropzone({
+    onDrop: onDropVideo,
+    accept: { "video/*": [] },
+    multiple: false,
+    maxFiles: 1,
+  });
 
   return (
     <>
@@ -142,12 +161,13 @@ const CreateReportPage = () => {
 
       <label>Images (1-5):</label>
       {images.length < 5 && (
-        <input
-          type="file"
-          accept="image/*"
-          multiple
-          onChange={handleImageChange}
-        />
+        <div {...getImageRootProps()}>
+          <input {...getImageInputProps()} />
+          <p>
+            Drag & drop up to {5 - images.length} more image(s), or click to
+            select
+          </p>
+        </div>
       )}
       {imagePreviewUrls.map((url, index) => (
         <div key={index}>
@@ -157,13 +177,18 @@ const CreateReportPage = () => {
       ))}
 
       <label>Optional Video:</label>
-      {videoPreview ? (
+      {!video && (
+        <div {...getVideoRootProps()}>
+          <input {...getVideoInputProps()} />
+          <p>Drag & drop a video file, or click to select</p>
+        </div>
+      )}
+
+      {videoPreview && (
         <>
           <video src={videoPreview} controls />
           <button onClick={removeVideo}>Remove</button>
         </>
-      ) : (
-        <input type="file" accept="video/*" onChange={handleVideoChange} />
       )}
 
       <>

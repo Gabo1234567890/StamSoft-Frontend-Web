@@ -17,7 +17,6 @@ const Report = ({ report }: { report: Report }) => {
       <p>{report?.latitude}</p>
       <p>{report?.longitude}</p>
       <p>{report?.createdAt}</p>
-      <p>{report?.reportedBy?.email}</p>
     </>
   );
 };

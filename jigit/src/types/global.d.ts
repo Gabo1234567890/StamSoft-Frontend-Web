@@ -46,5 +46,4 @@ interface Report {
   latitude: number;
   longitude: number;
   createdAt: string;
-  reportedBy: { id: number; email: string };
 }
