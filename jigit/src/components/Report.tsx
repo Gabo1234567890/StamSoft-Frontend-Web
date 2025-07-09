@@ -6,16 +6,17 @@ const Report = ({ report }: { report: Report }) => {
         return <img src={imageUrl} alt="image" key={index} />;
       })}
       {report.videoUrl ? (
-        <video>
+        <video controls>
           <source src={report.videoUrl} />
         </video>
       ) : null}
       <p>{report?.description}</p>
-      <p>{report?.licensePlate}</p>
+      {report?.licensePlate?.map((lp, index) => (
+        <p key={index}>{lp}</p>
+      ))}
       <p>{report?.latitude}</p>
       <p>{report?.longitude}</p>
       <p>{report?.createdAt}</p>
-      <p>{report?.reportedBy?.email}</p>
     </>
   );
 };
