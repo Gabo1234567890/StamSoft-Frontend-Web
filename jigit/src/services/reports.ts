@@ -14,7 +14,7 @@ export const uploadReport = async ({
   longitude: string;
   images: File[];
   video: File | null;
-}): Promise<void> => {
+}): Promise<Report> => {
   const formData = new FormData();
 
   formData.append("description", description);
@@ -23,18 +23,14 @@ export const uploadReport = async ({
   formData.append("longitude", longitude.toString());
   images.forEach((file) => formData.append("files", file));
   if (video) formData.append("files", video);
-
   try {
-    const response = await axiosInstance.post(
-      "/reports/upload",
-      {
-        formData,
-      },
-      { headers: { "Content-Type": "application/json" } }
-    );
+    const response = await axiosInstance.post("/reports/upload", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
     if (response.status != 200 && response.status != 201) {
       throw new Error("Failed to upload report");
     }
+    return response.data;
   } catch (error) {
     console.log(error);
     throw error;

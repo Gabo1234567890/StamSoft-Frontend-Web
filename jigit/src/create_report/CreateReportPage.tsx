@@ -2,6 +2,7 @@ import { useState, type ChangeEvent } from "react";
 import { uploadReport } from "../services/reports";
 import TextInput from "../components/TextInput";
 import LocationPicker from "../components/LocationPicker";
+import { useAuth } from "../context/AuthContext";
 
 const CreateReportPage = () => {
   const [description, setDescription] = useState("");
@@ -14,6 +15,7 @@ const CreateReportPage = () => {
   const [licensePlateInput, setLicensePlateInput] = useState("");
   const [imagePreviewUrls, setImagePreviewUrls] = useState<string[]>([]);
   const [videoPreview, setVideoPreview] = useState<string | null>(null);
+  const { setUser } = useAuth();
 
   const handleLocationChange = (lat: number, lng: number, addr: string) => {
     setLatitude(lat);
@@ -33,7 +35,7 @@ const CreateReportPage = () => {
         alert("All fields are required");
         return;
       }
-      await uploadReport({
+      const response = await uploadReport({
         description,
         licensePlates,
         latitude: latitude.toString(),
@@ -41,6 +43,24 @@ const CreateReportPage = () => {
         images,
         video,
       });
+      setUser((prevUser) => {
+        if (!prevUser) return prevUser;
+
+        return {
+          ...prevUser,
+          reports: [...(prevUser.reports || []), response],
+        };
+      });
+      setDescription("");
+      setLicensePlateInput("");
+      setLicensePlates([]);
+      setImages([]);
+      setImagePreviewUrls([]);
+      setVideo(null);
+      setVideoPreview(null);
+      setLatitude(null);
+      setLongitude(null);
+      setAddress("");
     } catch (error) {
       console.log(error);
       alert(error);

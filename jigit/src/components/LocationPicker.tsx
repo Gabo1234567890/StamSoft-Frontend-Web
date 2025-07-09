@@ -100,6 +100,7 @@ const LocationPicker = ({
             ref={autocompleteRef}
             placeholder="Search for an address"
             type="text"
+            style={{ width: "100%" }}
           />
           <div
             ref={mapRef}
