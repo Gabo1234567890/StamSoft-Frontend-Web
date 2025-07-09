@@ -34,7 +34,7 @@ const HomePage = () => {
         <>
           <h2>Feed:</h2>
           {recentReports.map((report) => (
-            <Report report={report} key={report.id} />
+            <Report report={report} key={report.id} hidden={false} />
           ))}
         </>
       )}

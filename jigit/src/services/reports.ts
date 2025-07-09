@@ -97,3 +97,39 @@ export const deleteReportByID = async (id: number): Promise<void> => {
     throw error;
   }
 };
+
+export const getTokenForSharedReport = async (id: number): Promise<string> => {
+  try {
+    const response = await axiosInstance.post(
+      `/reports/${id}/share`,
+      {},
+      {
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    if (response.status != 200 && response.status != 201) {
+      throw new Error("Failed to get token for report");
+    }
+
+    return response.data.token;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const getReportByToken = async (token: string): Promise<Report> => {
+  try {
+    const response = await axiosInstance.get(`/reports/shared/${token}`, {
+      headers: { "Content-Type": "application/json" },
+    });
+    if (response.status != 200 && response.status != 201) {
+      throw new Error("Failed to get report");
+    }
+
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

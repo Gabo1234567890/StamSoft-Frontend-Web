@@ -8,6 +8,7 @@ import ResetPasswordPage from "./login/ResetPasswordPage";
 import ProfilePage from "./profile/ProfilePage";
 import HomePage from "./home/HomePage";
 import CreateReportPage from "./create_report/CreateReportPage";
+import SharedReportPage from "./share_report/SharedReportPage";
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route path="/report/share/:token" element={<SharedReportPage />} />
       </Routes>
     </BrowserRouter>
   );
