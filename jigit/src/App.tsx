@@ -9,6 +9,8 @@ import ProfilePage from "./profile/ProfilePage";
 import HomePage from "./home/HomePage";
 import CreateReportPage from "./create_report/CreateReportPage";
 import SharedReportPage from "./share_report/SharedReportPage";
+import AdminGuard from "./guards/AdminGuard";
+import AdminPanel from "./admin/AdminPanel";
 
 function App() {
   return (
@@ -46,6 +48,9 @@ function App() {
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route path="/report/share/:token" element={<SharedReportPage />} />
+        <Route element={<AdminGuard />}>
+          <Route path="/admin" element={<AdminPanel />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
