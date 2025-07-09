@@ -47,15 +47,11 @@ const AdminPanel = () => {
         if (tab == 0) {
           const data = await getAllUsers(usersPage, limit);
           setUsers(data.data);
-          data.total % limit == 0
-            ? setUserPagesCount(data.total / limit)
-            : setUserPagesCount(Math.floor(data.total / limit) + 1);
+          setUserPagesCount(Math.ceil(data.total / limit));
         } else {
           const data = await getAllReports(reportsPage, limit);
           setReports(data.data);
-          data.total % limit == 0
-            ? setReportPagesCount(data.total / limit)
-            : setReportPagesCount(Math.floor(data.total / limit) + 1);
+          setReportPagesCount(Math.ceil(data.total / limit));
         }
       } catch (error) {
         console.log(error);
