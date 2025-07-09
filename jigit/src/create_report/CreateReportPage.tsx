@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent } from "react";
+import { useState } from "react";
 import { uploadReport } from "../services/reports";
 import TextInput from "../components/TextInput";
 import LocationPicker from "../components/LocationPicker";
@@ -118,7 +118,7 @@ const CreateReportPage = () => {
   const {
     getRootProps: getImageRootProps,
     getInputProps: getImageInputProps,
-    isDragActive: isImageDragActive,
+    // isDragActive: isImageDragActive,
   } = useDropzone({
     onDrop: onDropImages,
     accept: { "image/*": [] },
@@ -129,7 +129,7 @@ const CreateReportPage = () => {
   const {
     getRootProps: getVideoRootProps,
     getInputProps: getVideoInputProps,
-    isDragActive: isVideoDragActive,
+    // isDragActive: isVideoDragActive,
   } = useDropzone({
     onDrop: onDropVideo,
     accept: { "video/*": [] },
