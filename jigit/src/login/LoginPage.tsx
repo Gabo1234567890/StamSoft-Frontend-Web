@@ -7,6 +7,8 @@ import { login } from "../services/login";
 import { Link, useNavigate } from "react-router-dom";
 import ForgottenPasswordButton from "./components/ForgottenPasswordButton";
 import background from "../assets/LoginBackground.jpg";
+import HiddenTextInput from "../components/HiddenTextInput";
+import VisibleTextInput from "../components/VisibleTextInput";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -15,6 +17,7 @@ const LoginPage = () => {
   const [focusedPassword, setFocusedPassword] = useState(false);
   const [errorMessageEmail, setErrorMessageEmail] = useState("");
   const [errorMessagePassword, setErrorMessagePassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const { contextLogin } = useAuth();
   const navigate = useNavigate();
 
@@ -75,7 +78,7 @@ const LoginPage = () => {
                 }}
               />
               <TextInput
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 onChange={setPassword}
                 val={password}
@@ -85,6 +88,34 @@ const LoginPage = () => {
                   setFocusedPassword(focus);
                   setErrorMessagePassword("");
                 }}
+                rightIcon={
+                  <button
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="cursor-pointer"
+                  >
+                    {showPassword ? (
+                      <VisibleTextInput
+                        color={
+                          focusedPassword
+                            ? "#4110ea"
+                            : password || errorMessagePassword
+                            ? "#250d77"
+                            : "#666666"
+                        }
+                      />
+                    ) : (
+                      <HiddenTextInput
+                        color={
+                          focusedPassword
+                            ? "#4110ea"
+                            : password || errorMessagePassword
+                            ? "#250d77"
+                            : "#666666"
+                        }
+                      />
+                    )}
+                  </button>
+                }
               />
               <ForgottenPasswordButton email={email} />
             </div>

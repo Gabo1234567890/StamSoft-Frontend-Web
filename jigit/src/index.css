@@ -24,14 +24,14 @@
   }
 
   .focus-input-field {
-    @apply border-2 rounded-sm border-primary1 text-primary1 font-secondary text-paragraph-regular1 caret-primary1;
+    @apply border rounded-sm border-primary1 text-primary1 font-secondary text-paragraph-regular1 caret-primary1;
   }
 
   .filled-input-field {
-    @apply border-2 rounded-sm border-secondary2 text-secondary2 font-secondary text-paragraph-regular1;
+    @apply border rounded-sm border-secondary2 text-secondary2 font-secondary text-paragraph-regular1;
   }
 
   .error-input-field {
-    @apply border-2 rounded-sm border-functional-error text-secondary2 font-secondary text-paragraph-regular1;
+    @apply border rounded-sm border-functional-error text-secondary2 font-secondary text-paragraph-regular1;
   }
 }
