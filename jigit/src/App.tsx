@@ -10,6 +10,8 @@ import CreateReportPage from "./create_report/CreateReportPage";
 import SharedReportPage from "./share_report/SharedReportPage";
 import AdminGuard from "./guards/AdminGuard";
 import AdminPanel from "./admin/AdminPanel";
+import TermsAndConditions from "./legal_pages/TermsAndConditions";
+import PrivacyPolicy from "./legal_pages/PrivacyPolicy";
 
 function App() {
   return (
@@ -43,13 +45,15 @@ function App() {
             }
           />
         </Route>
+        <Route element={<AdminGuard />}>
+          <Route path="/admin" element={<AdminPanel />} />
+        </Route>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route path="/report/share/:token" element={<SharedReportPage />} />
-        <Route element={<AdminGuard />}>
-          <Route path="/admin" element={<AdminPanel />} />
-        </Route>
+        <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       </Routes>
     </BrowserRouter>
   );

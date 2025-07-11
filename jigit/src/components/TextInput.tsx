@@ -1,5 +1,4 @@
 import type { Dispatch, SetStateAction } from "react";
-
 interface TextInputProps {
   type: string;
   placeholder: string;
@@ -9,6 +8,7 @@ interface TextInputProps {
   focused: boolean;
   onFocus: (focus: boolean) => void;
   rightIcon?: React.ReactNode;
+  forgotPassword?: React.ReactNode;
 }
 
 const TextInput = ({
@@ -20,19 +20,20 @@ const TextInput = ({
   focused,
   onFocus,
   rightIcon,
+  forgotPassword,
 }: TextInputProps) => {
+  console.log(errorMessage);
   return (
-    <div className="gap-2 max-h-[92px] flex flex-col">
-      <div className="px-3 place-items-start h-4">
-        {(errorMessage || focused || val) && (
+    <div className="gap-2 flex flex-col">
+      <div className="px-3 place-items-start">
+        {((errorMessage && val) || focused || val) && (
           <label
             className={
-              "absolute " +
-              (focused
+              focused
                 ? "text-primary1 text-paragraph-regular3 font-secondary"
-                : errorMessage
+                : errorMessage && val
                 ? "text-functional-error text-paragraph-regular3 font-secondary"
-                : "text-secondary2 text-paragraph-regular3 font-secondary")
+                : "text-secondary2 text-paragraph-regular3 font-secondary"
             }
           >
             {placeholder}
@@ -43,17 +44,17 @@ const TextInput = ({
         <div className="relative flex gap-1 h-[52px]">
           <input
             className={
-              "h-full py-4 px-3 gap-2.5 w-full " +
+              "h-full py-4 px-3 gap-2.5 w-full relative " +
               (focused
                 ? "focus-input-field"
-                : errorMessage
+                : errorMessage && val
                 ? "error-input-field"
                 : val
                 ? "filled-input-field"
                 : "default-input-field")
             }
             type={type}
-            placeholder={!errorMessage && !focused && !val ? placeholder : ""}
+            placeholder={!focused && !val ? placeholder : ""}
             onChange={(e) => onChange(e.target.value)}
             value={val}
             onFocus={() => onFocus(true)}
@@ -65,12 +66,15 @@ const TextInput = ({
             </div>
           )}
         </div>
-        <div className="px-3 gap-2.5 place-items-start h-3">
-          {errorMessage && (
-            <label className="text-functional-error font-secondary text-caption absolute">
-              {errorMessage}
-            </label>
-          )}
+        <div className="flex justify-between w-full items-center">
+          <div className="px-3 leading-0 mb-auto">
+            {!focused && errorMessage && val && (
+              <span className="text-functional-error font-secondary text-caption">
+                {errorMessage}
+              </span>
+            )}
+          </div>
+          {forgotPassword && forgotPassword}
         </div>
       </div>
     </div>

@@ -12,11 +12,11 @@
   }
 
   .login-container {
-    @apply max-w-md w-1/4 min-w-[380px] py-2;
+    @apply max-w-md w-1/4 min-w-[412px] py-2 flex flex-col gap-2;
   }
 
   .login-form {
-    @apply bg-base-0 w-full rounded-2xl p-6 shadow-subtle;
+    @apply bg-base-0 w-full rounded-2xl p-6 shadow-subtle flex flex-col gap-5;
   }
 
   .default-input-field {
@@ -33,5 +33,29 @@
 
   .error-input-field {
     @apply border rounded-sm border-functional-error text-secondary2 font-secondary text-paragraph-regular1;
+  }
+
+  .forgotten-password {
+    @apply text-paragraph-regular3 underline font-secondary text-primary1 cursor-pointer;
+  }
+
+  .default-filled-button {
+    @apply bg-primary1 text-base-0 rounded-sm font-secondary text-paragraph-medium1 place-items-center py-4;
+  }
+
+  .disabled-filled-button {
+    @apply bg-base-60 text-base-0 rounded-sm font-secondary text-paragraph-medium1 place-items-center py-4 cursor-not-allowed;
+  }
+
+  .default-filled-button:hover {
+    @apply bg-secondary2 text-base-0 rounded-sm font-secondary text-paragraph-medium1 place-items-center py-4 cursor-pointer;
+  }
+
+  .create-account {
+    @apply text-paragraph-medium2 underline font-secondary text-primary1 cursor-pointer;
+  }
+
+  .terms-policy {
+    @apply text-paragraph-medium1 underline font-secondary text-base-0;
   }
 }

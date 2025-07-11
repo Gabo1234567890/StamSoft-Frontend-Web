@@ -14,7 +14,11 @@ const ForgottenPasswordButton = ({ email }: { email: string }) => {
       alert(error);
     }
   };
-  return <button onClick={handleClick}>Forgotten Password?</button>;
+  return (
+    <button className="forgotten-password" onClick={handleClick}>
+      Forgot Password?
+    </button>
+  );
 };
 
 export default ForgottenPasswordButton;

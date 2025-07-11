@@ -35,6 +35,9 @@ const GoogleLoginButton = () => {
     window.google.accounts.id.renderButton(divRef.current, {
       theme: "outline",
       size: "large",
+      text: "continue_with",
+      shape: "rectangular",
+      logo_alignment: "center",
     });
   }, []);
 
