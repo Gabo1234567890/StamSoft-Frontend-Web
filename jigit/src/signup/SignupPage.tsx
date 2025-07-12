@@ -11,6 +11,7 @@ import HiddenTextInput from "../components/HiddenTextInput";
 import CarButton from "../components/CarButton";
 import { addCar } from "../services/cars";
 import PlusIcon from "../components/PlusIcon";
+import CreateAccountModal from "./components/CreateAccountModal";
 
 const SignupPage = () => {
   const [email, setEmail] = useState("");
@@ -35,6 +36,7 @@ const SignupPage = () => {
   ]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [addButtonHover, setAddButtonHover] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const { setAuth } = useAuth();
   const navigate = useNavigate();
 
@@ -301,7 +303,7 @@ const SignupPage = () => {
               {step == 2 && (
                 <div className="flex flex-col gap-4">
                   <button
-                    onClick={handleSignup}
+                    onClick={() => setShowModal(true)}
                     className="default-filled-button"
                   >
                     Create Account
@@ -360,6 +362,12 @@ const SignupPage = () => {
           </Link>
         </div>
       </div>
+      {showModal && (
+        <CreateAccountModal
+          handleSignup={handleSignup}
+          setVisibility={setShowModal}
+        />
+      )}
     </div>
   );
 };

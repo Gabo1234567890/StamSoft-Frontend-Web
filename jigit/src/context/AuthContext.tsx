@@ -51,6 +51,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setAccessToken(accessToken);
     setRefreshToken(refreshToken);
     setUser(user);
+    refreshAuth();
   };
 
   const clearAuth = () => {

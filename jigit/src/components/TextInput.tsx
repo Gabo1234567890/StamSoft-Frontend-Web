@@ -22,7 +22,6 @@ const TextInput = ({
   rightIcon,
   forgotPassword,
 }: TextInputProps) => {
-  console.log(errorMessage);
   return (
     <div className="gap-2 flex flex-col">
       <div className="px-3 place-items-start">

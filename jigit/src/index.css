@@ -40,11 +40,11 @@
   }
 
   .default-filled-button {
-    @apply bg-primary1 text-base-0 rounded-sm font-secondary text-paragraph-medium1 place-items-center py-4;
+    @apply border border-primary1 bg-primary1 text-base-0 rounded-sm font-secondary text-paragraph-medium1 items-center justify-center flex py-4;
   }
 
   .disabled-filled-button {
-    @apply bg-base-60 text-base-0 rounded-sm font-secondary text-paragraph-medium1 place-items-center py-4 cursor-not-allowed;
+    @apply border border-base-60 bg-base-60 text-base-0 rounded-sm font-secondary text-paragraph-medium1 place-items-center py-4 cursor-not-allowed;
   }
 
   .default-filled-button:hover {
@@ -82,5 +82,21 @@
 
   .disabled-not-filled-button {
     @apply border border-base-90 rounded-sm py-3 px-12 text-paragraph-medium2 font-secondary text-base-90 cursor-not-allowed justify-center gap-2.5 items-center;
+  }
+
+  .modal-container {
+    @apply bg-base-0 shadow-subtle flex flex-col gap-4 py-3 items-center md:w-2/5 lg:w-2/9 rounded-sm;
+  }
+
+  .modal-heading {
+    @apply text-primary1 text-body2 font-primary;
+  }
+
+  .modal-description {
+    @apply text-secondary2 text-paragraph-regular2 font-secondary text-center;
+  }
+
+  .modal-background {
+    @apply items-center fixed bg-black/50 z-10 w-full h-full flex justify-center;
   }
 }
