@@ -5,7 +5,6 @@ import GoogleLoginButton from "../components/GoogleLoginButton";
 // import FacebookLoginButton from "../components/FacebookLoginButton";
 import { login } from "../services/login";
 import { Link, useNavigate } from "react-router-dom";
-import ForgottenPasswordButton from "./components/ForgottenPasswordButton";
 import background from "../assets/AuthBackground.jpg";
 import HiddenTextInput from "../components/HiddenTextInput";
 import VisibleTextInput from "../components/VisibleTextInput";
@@ -130,7 +129,11 @@ const LoginPage = () => {
                     )}
                   </button>
                 }
-                forgotPassword={<ForgottenPasswordButton email={email} />}
+                forgotPassword={
+                  <Link to={"/forgot-password"} className="forgotten-password">
+                    Forgot Password?
+                  </Link>
+                }
               />
             </div>
           </div>

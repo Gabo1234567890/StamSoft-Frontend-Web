@@ -138,7 +138,7 @@ const SignupPage = () => {
                 <h1 className="text-heading2 text-primary1 font-primary text-center">
                   Create Account
                 </h1>
-                {step == 2 && <div className="w-1/12"></div>}
+                {step == 2 && <div className="w-1/14"></div>}
               </div>
             </div>
             <div className="flex flex-col gap-4">
