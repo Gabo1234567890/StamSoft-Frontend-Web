@@ -6,7 +6,7 @@ import GoogleLoginButton from "../components/GoogleLoginButton";
 import { login } from "../services/login";
 import { Link, useNavigate } from "react-router-dom";
 import ForgottenPasswordButton from "./components/ForgottenPasswordButton";
-import background from "../assets/LoginBackground.jpg";
+import background from "../assets/AuthBackground.jpg";
 import HiddenTextInput from "../components/HiddenTextInput";
 import VisibleTextInput from "../components/VisibleTextInput";
 
@@ -150,7 +150,7 @@ const LoginPage = () => {
                 <p className="text-paragraph-regular2 font-secondary">
                   Don't have an account?
                 </p>
-                <Link to={"/signup"} className="create-account">
+                <Link to={"/signup"} className="text-link">
                   Create Account
                 </Link>
               </div>

@@ -4,7 +4,7 @@ interface TextInputProps {
   placeholder: string;
   onChange: Dispatch<SetStateAction<string>>;
   val?: string;
-  errorMessage: string;
+  errorMessage?: string;
   focused: boolean;
   onFocus: (focus: boolean) => void;
   rightIcon?: React.ReactNode;
