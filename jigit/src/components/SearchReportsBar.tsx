@@ -1,18 +1,19 @@
 import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
 import { getLicensePlateReports } from "../services/reports";
-import TextInput from "./TextInput";
-import Report from "./Report";
+//import Report from "./Report";
 import { useDebounce } from "react-use";
 
 const SearchReportsBar = ({
   searchQuery,
   setSearchQuery,
+  setSearchResult,
 }: {
   searchQuery: string;
   setSearchQuery: Dispatch<SetStateAction<string>>;
+  setSearchResult: Dispatch<SetStateAction<Report[]>>;
 }) => {
   const [debounceSearchQuery, setDebounceSearchQuery] = useState("");
-  const [searchResult, setSearchResult] = useState<Report[]>([]);
+  //const [searchResult, setSearchResult] = useState<Report[]>([]);
 
   const handleSearch = async (searchQuery: string) => {
     try {
@@ -31,16 +32,17 @@ const SearchReportsBar = ({
   useDebounce(() => setDebounceSearchQuery(searchQuery), 500, [searchQuery]);
 
   return (
-    <>
-      <TextInput
-        placeholder="Search for reports by license plate"
+    <div className="search-bar">
+      <input
+        className="text-primary1 caret-primary1 w-full"
+        placeholder="Search..."
         type="text"
-        val={searchQuery}
+        value={searchQuery}
         onChange={(val) => {
           setSearchQuery(val.toString());
         }}
       />
-      {searchQuery &&
+      {/* {searchQuery &&
         (searchResult.length > 0 ? (
           <ul>
             {searchResult.map((report) => (
@@ -51,8 +53,9 @@ const SearchReportsBar = ({
           </ul>
         ) : (
           <p>No matching results</p>
-        ))}
-    </>
+        ))} */}
+      <img src="/SearchIcon.svg" alt="Search" />
+    </div>
   );
 };
 

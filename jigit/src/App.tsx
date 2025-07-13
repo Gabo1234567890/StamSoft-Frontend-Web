@@ -20,14 +20,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route element={<AuthGuard />}>
-          <Route
-            path="/"
-            element={
-              <>
-                <LogoutButton /> <HomePage />
-              </>
-            }
-          />
+          <Route path="/" element={<HomePage />} />
           <Route
             path="/profile"
             element={

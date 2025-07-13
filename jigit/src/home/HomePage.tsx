@@ -3,6 +3,8 @@ import { getRecentReports } from "../services/reports";
 import { useEffect, useState } from "react";
 import Report from "../components/Report";
 import SearchReportsBar from "../components/SearchReportsBar";
+import LogoutButton from "../components/LogoutButton";
+import NavBar from "../components/NavBar";
 
 const HomePage = () => {
   const [recentReports, setRecentReports] = useState<Report[]>([]);
@@ -23,7 +25,8 @@ const HomePage = () => {
   }, []);
 
   return (
-    <>
+    <div className="main-page-background">
+      <NavBar pageTitle="Home Feed" />
       <Link to={"/profile"}>Profile</Link>
       <Link to={"/create-report"}>Create Report</Link>
       <SearchReportsBar
@@ -38,7 +41,7 @@ const HomePage = () => {
           ))}
         </>
       )}
-    </>
+    </div>
   );
 };
 
