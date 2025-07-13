@@ -34,6 +34,7 @@ const config: Config = {
       },
 
       fontSize: {
+        heading0: ["48px", { fontWeight: "500", lineHeight: "48px" }],
         heading1: ["40px", { fontWeight: "700", lineHeight: "48px" }],
         heading2: ["32px", { fontWeight: "500", lineHeight: "40px" }],
         heading3: ["28px", { fontWeight: "500", lineHeight: "28px" }],
