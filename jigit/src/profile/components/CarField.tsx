@@ -3,7 +3,6 @@ import InformationField from "./InformationField";
 import EditButton from "../../components/EditButton";
 import TextInput from "../../components/TextInput";
 import PencilIcon from "../../components/PencilIcon";
-import LogoutButton from "../../components/LogoutButton";
 import DeleteButton from "../../components/DeleteButton";
 
 const CarField = ({ car }: { car: Car }) => {
