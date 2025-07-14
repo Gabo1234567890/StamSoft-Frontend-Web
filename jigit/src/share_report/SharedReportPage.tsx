@@ -28,10 +28,9 @@ const SharedReportPage = () => {
   }
 
   return (
-    <>
-      <h2>Shared Report</h2>
+    <div className="h-screen px-25 flex flex-col justify-center">
       <Report report={report} shared={true} />
-    </>
+    </div>
   );
 };
 

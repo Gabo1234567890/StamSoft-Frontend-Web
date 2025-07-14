@@ -126,21 +126,19 @@ const Report = ({ report, shared }: { report: Report; shared: boolean }) => {
         <div className="border-l border-base-60 py-4 pl-8 w-1/2">
           <div className="flex flex-col h-full">
             <div className="flex justify-end w-full">
-              {!shared && (
-                <>
-                  <button
-                    onClick={() => {
-                      setShowModal(!showModal);
-                      handleReportSharing();
-                    }}
-                    className="cursor-pointer"
-                  >
-                    <img src="/ShareIcon.svg" alt="Share" />
-                  </button>
-                </>
-              )}
+              <>
+                <button
+                  onClick={() => {
+                    setShowModal(!showModal);
+                    handleReportSharing();
+                  }}
+                  className={`cursor-pointer ${shared ? "invisible" : ""}`}
+                >
+                  <img src="/ShareIcon.svg" alt="Share" />
+                </button>
+              </>
             </div>
-            <CommentsSection />
+            <CommentsSection shared={shared} />
           </div>
         </div>
       </div>
