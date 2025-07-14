@@ -3,7 +3,6 @@ import InformationField from "./InformationField";
 import EditButton from "../../components/EditButton";
 import TextInput from "../../components/TextInput";
 import PencilIcon from "../../components/PencilIcon";
-import LogoutButton from "../../components/LogoutButton";
 import DeleteButton from "../../components/DeleteButton";
 
 const CarField = ({ car }: { car: Car }) => {
@@ -43,7 +42,7 @@ const CarField = ({ car }: { car: Car }) => {
         <div className="flex items-end justify-between transition-transform duration-300">
           {edit ? (
             <div className="flex justify-between w-full items-end">
-              <div className="w-2/13">
+              <div className="w-1/5">
                 <TextInput
                   type="text"
                   placeholder="Brand"
@@ -57,7 +56,7 @@ const CarField = ({ car }: { car: Car }) => {
                 />
               </div>
 
-              <div className="w-2/13">
+              <div className="w-1/5">
                 <TextInput
                   type="text"
                   placeholder="Model"
@@ -71,7 +70,7 @@ const CarField = ({ car }: { car: Car }) => {
                 />
               </div>
 
-              <div className="w-2/13">
+              <div className="w-1/5">
                 <TextInput
                   type="text"
                   placeholder="License Plate"
@@ -86,12 +85,16 @@ const CarField = ({ car }: { car: Car }) => {
                   }
                 />
               </div>
-              <DeleteButton />
-              <EditButton
-                className="h-10 px-5 py-0.5"
-                onClick={() => setEdit(false)}
-                editing={true}
-              />
+
+              {/* Buttons */}
+              <div className="flex gap-8 items-end pb-1">
+                <DeleteButton />
+                <EditButton
+                  className="h-10 px-5 py-0.5"
+                  onClick={() => setEdit(false)}
+                  editing={true}
+                />
+              </div>
             </div>
           ) : (
             <div className="flex justify-between w-full items-end">
