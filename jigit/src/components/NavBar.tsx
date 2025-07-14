@@ -16,15 +16,19 @@ const NavBar = ({
   const navigate = useNavigate();
   return (
     <div className="nav-bar-container">
-      <img src="/LoginLogo.svg" alt="Logo" />
+      <div className="flex w-2/3 justify-between">
+        <img src="/LoginLogo.svg" alt="Logo" />
 
-      <div className="flex items-center justify-between w-1/2 mr-60">
-        <SearchReportsBar
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          setSearchResult={setSearchResult}
-        />
-        <p className="text-heading2 text-primary1 font-primary">{pageTitle}</p>
+        <div className="flex items-center justify-around w-9/10 mr-5">
+          <SearchReportsBar
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            setSearchResult={setSearchResult}
+          />
+          <p className="text-heading2 text-primary1 font-primary">
+            {pageTitle}
+          </p>
+        </div>
       </div>
 
       <div className="flex gap-8 items-center">

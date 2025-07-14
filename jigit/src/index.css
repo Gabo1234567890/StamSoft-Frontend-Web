@@ -101,7 +101,7 @@
   }
 
   .main-page-background {
-    @apply w-full h-full flex flex-col gap-11;
+    @apply w-full h-full flex flex-col gap-11 px-25;
   }
 
   .nav-bar-container {
@@ -109,6 +109,6 @@
   }
 
   .search-bar {
-    @apply flex items-center border rounded-sm border-primary1 py-2 px-3 gap-6 justify-between min-w-[264px] w-3/5 max-w-xl;
+    @apply flex items-center border rounded-sm border-primary1 py-2 px-3 gap-6 justify-between min-w-[264px] w-2/5 max-w-xl;
   }
 }
