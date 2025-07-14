@@ -31,7 +31,7 @@ const CommentsSection = ({ shared }: { shared: boolean }) => {
           />
         </div>
       </div>
-      <div className="flex gap-4">
+      <div className="flex gap-4 items-end">
         {shared ? (
           <button
             className="default-filled-button w-full"
@@ -42,14 +42,16 @@ const CommentsSection = ({ shared }: { shared: boolean }) => {
         ) : (
           <>
             <div className="pt-4.5">
-              <p className="font-secondary text-secondary2 text-heading3">
-                {user?.email.slice(0, 2).toUpperCase()}
-              </p>
+              <div className="flex items-center justify-center aspect-square bg-primary2 rounded-lg p-3.5 w-4/5">
+                <p className="font-secondary text-heading3 text-secondary2">
+                  {user?.email.slice(0, 2).toUpperCase()}
+                </p>
+              </div>
             </div>
             <div
               className={`flex rounded-sm border ${
                 !comment ? "border-secondary2" : "border-primary1"
-              } py-3 px-4 gap-3 items-center w-full`}
+              } py-3 px-4 gap-3 items-center w-full max-h-3/4`}
             >
               <input
                 type="text"
