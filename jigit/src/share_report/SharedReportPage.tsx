@@ -30,7 +30,7 @@ const SharedReportPage = () => {
   return (
     <>
       <h2>Shared Report</h2>
-      <Report report={report} hidden={true} />
+      <Report report={report} shared={true} />
     </>
   );
 };
