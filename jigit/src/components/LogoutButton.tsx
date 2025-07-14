@@ -9,7 +9,14 @@ const LogoutButton = () => {
     logout();
     navigate("/login");
   };
-  return <button onClick={onClick}>Log Out</button>;
+  return (
+    <button
+      onClick={onClick}
+      className="flex gap-2.5 default-not-filled-button border-functional-error text-functional-error hover:bg-functional-error hover:text-base-0 font-secondary text-paragraph-medium1"
+    >
+      Log Out
+    </button>
+  );
 };
 
 export default LogoutButton;

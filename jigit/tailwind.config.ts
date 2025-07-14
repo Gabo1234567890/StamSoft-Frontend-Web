@@ -34,10 +34,11 @@ const config: Config = {
       },
 
       fontSize: {
-        heading0: ["48px", { fontWeight: "500", lineHeight: "48px" }],
+        heading0: ["58px", { fontWeight: "500", lineHeight: "48px" }],
         heading1: ["40px", { fontWeight: "700", lineHeight: "48px" }],
         heading2: ["32px", { fontWeight: "500", lineHeight: "40px" }],
         heading3: ["28px", { fontWeight: "500", lineHeight: "28px" }],
+        heading3light: ["28px", { fontWeight: "300", lineHeight: "28px" }],
 
         body1: ["24px", { fontWeight: "500", lineHeight: "28px" }],
         body2: ["20px", { fontWeight: "500", lineHeight: "24px" }],
