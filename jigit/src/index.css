@@ -101,7 +101,7 @@
   }
 
   .main-page-background {
-    @apply w-full h-full flex flex-col gap-11 px-25;
+    @apply w-full h-full flex flex-col gap-11 px-25 pt-38;
   }
 
   .profile-cards-container {
@@ -109,10 +109,18 @@
   }
 
   .nav-bar-container {
-    @apply flex items-center w-full fixed bg-base-0 border-b border-base-30 px-6 py-7 gap-14 justify-between max-h-[108px];
+    @apply z-50 flex items-center w-full fixed bg-base-0 border-b border-base-30 px-6 py-7 gap-14 justify-between max-h-[108px];
   }
 
   .search-bar {
     @apply flex items-center border rounded-sm border-primary1 py-2 px-3 gap-6 justify-between min-w-[264px] w-2/5 max-w-xl;
+  }
+
+  .feed-container {
+    @apply flex flex-col gap-13 w-full;
+  }
+
+  .report-container {
+    @apply w-full shadow-subtle py-6 px-10;
   }
 }

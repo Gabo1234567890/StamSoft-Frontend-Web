@@ -8,9 +8,11 @@ import { useDropzone } from "react-dropzone";
 const CreateReportPage = () => {
   const [description, setDescription] = useState("");
   const [licensePlates, setLicensePlates] = useState<string[]>([]);
-  const [latitude, setLatitude] = useState<number | null>(null);
-  const [longitude, setLongitude] = useState<number | null>(null);
-  const [address, setAddress] = useState("");
+  const [latitude, setLatitude] = useState<number | null>(42.697698767957746);
+  const [longitude, setLongitude] = useState<number | null>(23.32189999999999);
+  const [address, setAddress] = useState(
+    'Sofia Center, bul. "Knyaginya Maria Luiza" 2, 1000 Sofia, Bulgaria'
+  );
   const [images, setImages] = useState<File[]>([]);
   const [video, setVideo] = useState<File | null>(null);
   const [licensePlateInput, setLicensePlateInput] = useState("");
