@@ -76,6 +76,10 @@
     @apply border border-primary1 rounded-sm py-3 px-12 text-primary1 font-secondary text-paragraph-medium2 justify-center items-center gap-2.5;
   }
 
+  .delete-button {
+    @apply border border-functional-error rounded-sm h-10 px-5 text-functional-error font-secondary text-paragraph-medium2 justify-center items-center gap-2.5;
+  }
+
   .default-not-filled-button:hover {
     @apply border-secondary2 text-secondary2 cursor-pointer;
   }
