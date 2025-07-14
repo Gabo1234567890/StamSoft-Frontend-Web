@@ -21,15 +21,7 @@ function App() {
       <Routes>
         <Route element={<AuthGuard />}>
           <Route path="/" element={<HomePage />} />
-          <Route
-            path="/profile"
-            element={
-              <>
-                <LogoutButton />
-                <ProfilePage />
-              </>
-            }
-          />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route
             path="/create-report"
             element={
