@@ -81,7 +81,9 @@ const NavBar = ({
         <div className="flex gap-6 justify-end">
           <button
             onClick={() => navigate("/create-report")}
-            className="default-filled-button max-h-[52px] gap-2 px-3 bg-secondary2"
+            className={`default-filled-button max-h-[52px] gap-2 px-3 ${
+              pageTitle == "New Report" ? "bg-primary1" : "bg-secondary2"
+            }`}
           >
             <img src="/EmptyPlusIcon.svg" alt="Plus" />
             <p>New Report</p>
