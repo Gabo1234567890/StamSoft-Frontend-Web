@@ -3,7 +3,7 @@ const CardHeader = ({
   children,
 }: {
   title: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }) => (
   <div className="flex justify-between">
     <p className="font-primary text-heading2 text-secondary2">{title}</p>

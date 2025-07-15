@@ -7,7 +7,9 @@ import DeleteButton from "../../components/DeleteButton";
 
 const CarField = ({ car }: { car: Car }) => {
   const [expanded, setExpanded] = useState(false);
+
   const toggleSection = () => setExpanded(!expanded);
+
   const [edit, setEdit] = useState(false);
 
   const [brand, setBrand] = useState(car.brand);
