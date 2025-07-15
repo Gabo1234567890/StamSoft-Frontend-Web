@@ -33,11 +33,17 @@ const HomePage = () => {
       <div className="main-page-background">
         <div className="feed-container">
           {searchQuery ? (
-            <>
-              {searchResult.map((report) => (
-                <Report report={report} key={report.id} shared={false} />
-              ))}
-            </>
+            searchResult.length == 0 ? (
+              <p className="text-heading1 text-center text-base-90 pt-60 font-primary">
+                No Results.
+              </p>
+            ) : (
+              <>
+                {searchResult.map((report) => (
+                  <Report report={report} key={report.id} shared={false} />
+                ))}
+              </>
+            )
           ) : (
             <>
               {recentReports.map((report) => (

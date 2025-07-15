@@ -1,6 +1,5 @@
 import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
 import { getLicensePlateReports } from "../services/reports";
-//import Report from "./Report";
 import { useDebounce } from "react-use";
 
 const SearchReportsBar = ({
@@ -13,7 +12,6 @@ const SearchReportsBar = ({
   setSearchResult: Dispatch<SetStateAction<Report[]>>;
 }) => {
   const [debounceSearchQuery, setDebounceSearchQuery] = useState("");
-  //const [searchResult, setSearchResult] = useState<Report[]>([]);
 
   const handleSearch = async (searchQuery: string) => {
     try {
@@ -38,22 +36,10 @@ const SearchReportsBar = ({
         placeholder="Search..."
         type="text"
         value={searchQuery}
-        onChange={(val) => {
-          setSearchQuery(val.toString());
+        onChange={(e) => {
+          setSearchQuery(e.target.value);
         }}
       />
-      {/* {searchQuery &&
-        (searchResult.length > 0 ? (
-          <ul>
-            {searchResult.map((report) => (
-              <li key={report.id}>
-                <Report report={report} />
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No matching results</p>
-        ))} */}
       <img src="/SearchIcon.svg" alt="Search" />
     </div>
   );
