@@ -2,7 +2,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginPage from "./login/LoginPage";
 import AuthGuard from "./guards/AuthGuard";
 import SignupPage from "./signup/SignupPage";
-import LogoutButton from "./components/LogoutButton";
 import ResetPasswordPage from "./login/ResetPasswordPage";
 import ProfilePage from "./profile/ProfilePage";
 import HomePage from "./home/HomePage";
@@ -22,15 +21,7 @@ function App() {
         <Route element={<AuthGuard />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/profile" element={<ProfilePage />} />
-          <Route
-            path="/create-report"
-            element={
-              <>
-                <LogoutButton />
-                <CreateReportPage />
-              </>
-            }
-          />
+          <Route path="/create-report" element={<CreateReportPage />} />
         </Route>
         <Route element={<AdminGuard />}>
           <Route path="/admin" element={<AdminPanel />} />
