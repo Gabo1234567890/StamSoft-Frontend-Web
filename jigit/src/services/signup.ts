@@ -5,7 +5,6 @@ export const signup = async ({
   password,
   firstName,
   lastName,
-  car,
 }: SignupDetails): Promise<LoginResponse> => {
   try {
     const response = await axiosInstance.post(
@@ -15,7 +14,6 @@ export const signup = async ({
         password,
         firstName,
         lastName,
-        car,
       },
       { headers: { "Content-Type": "application/json" } }
     );

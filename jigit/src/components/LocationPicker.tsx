@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import PencilIcon from "./PencilIcon";
 
 const LocationPicker = ({
   onLocationChange,
@@ -15,6 +16,7 @@ const LocationPicker = ({
   const [marker, setMarker] =
     useState<google.maps.marker.AdvancedMarkerElement | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [focusedLocationInput, setFocusedLocationInput] = useState(false);
 
   useEffect(() => {
     const checkGoogleMaps = () => {
@@ -96,20 +98,35 @@ const LocationPicker = ({
         <p>Loading Google Maps</p>
       ) : (
         <>
-          <input
-            ref={autocompleteRef}
-            placeholder="Search for an address"
-            type="text"
-            style={{ width: "100%" }}
-          />
-          <div
-            ref={mapRef}
-            style={{
-              width: "100%",
-              height: "400px",
-              marginTop: "1rem",
-            }}
-          />
+          <div className="flex gap-4 w-full items-center">
+            <img src="/LocationIcon.svg" alt="Location" />
+            <div
+              className={`flex items-center py-4 px-3 border rounded-sm w-full ${
+                focusedLocationInput
+                  ? "border-primary1 caret-primary1 text-primary1"
+                  : "border-secondary2 text-secondary2"
+              }`}
+              onMouseEnter={() => setFocusedLocationInput(true)}
+              onMouseLeave={() => setFocusedLocationInput(false)}
+            >
+              <input
+                ref={autocompleteRef}
+                placeholder="Add Location"
+                type="text"
+                className="w-full"
+              />
+              <PencilIcon
+                color={
+                  focusedLocationInput
+                    ? "#4110ea"
+                    : autocompleteRef
+                    ? "#250d77"
+                    : "666666"
+                }
+              />
+            </div>
+          </div>
+          <div ref={mapRef} className="w-full aspect-square max-h-4/5" />
         </>
       )}
     </>

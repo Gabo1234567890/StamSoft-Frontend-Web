@@ -1,12 +1,12 @@
-import { Link } from "react-router";
 import { getRecentReports } from "../services/reports";
 import { useEffect, useState } from "react";
 import Report from "../components/Report";
-import SearchReportsBar from "../components/SearchReportsBar";
+import NavBar from "../components/NavBar";
 
 const HomePage = () => {
   const [recentReports, setRecentReports] = useState<Report[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [searchResult, setSearchResult] = useState<Report[]>([]);
 
   const fetchRecentReports = async () => {
     try {
@@ -24,20 +24,35 @@ const HomePage = () => {
 
   return (
     <>
-      <Link to={"/profile"}>Profile</Link>
-      <Link to={"/create-report"}>Create Report</Link>
-      <SearchReportsBar
+      <NavBar
+        pageTitle="Home Feed"
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
+        setSearchResult={setSearchResult}
       />
-      {!searchQuery && (
-        <>
-          <h2>Feed:</h2>
-          {recentReports.map((report) => (
-            <Report report={report} key={report.id} hidden={false} />
-          ))}
-        </>
-      )}
+      <div className="main-page-background">
+        <div className="feed-container">
+          {searchQuery ? (
+            searchResult.length == 0 ? (
+              <p className="text-heading1 text-center text-base-90 pt-60 font-primary">
+                No Results.
+              </p>
+            ) : (
+              <>
+                {searchResult.map((report) => (
+                  <Report report={report} key={report.id} shared={false} />
+                ))}
+              </>
+            )
+          ) : (
+            <>
+              {recentReports.map((report) => (
+                <Report report={report} key={report.id} shared={false} />
+              ))}
+            </>
+          )}
+        </div>
+      </div>
     </>
   );
 };

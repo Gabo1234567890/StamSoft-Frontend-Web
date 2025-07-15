@@ -1,21 +1,27 @@
 import { useState } from "react";
 import { uploadReport } from "../services/reports";
-import TextInput from "../components/TextInput";
 import LocationPicker from "../components/LocationPicker";
 import { useAuth } from "../context/AuthContext";
 import { useDropzone } from "react-dropzone";
+import NavBar from "../components/NavBar";
+import LicensePlate from "../components/LicensePlate";
+import PlusIcon from "../components/PlusIcon";
+import MediaCarousel from "./components/MediaCarousel";
 
 const CreateReportPage = () => {
   const [description, setDescription] = useState("");
   const [licensePlates, setLicensePlates] = useState<string[]>([]);
-  const [latitude, setLatitude] = useState<number | null>(null);
-  const [longitude, setLongitude] = useState<number | null>(null);
-  const [address, setAddress] = useState("");
+  const [latitude, setLatitude] = useState<number | null>(42.697698767957746);
+  const [longitude, setLongitude] = useState<number | null>(23.32189999999999);
+  const [address, setAddress] = useState(
+    'Sofia Center, bul. "Knyaginya Maria Luiza" 2, 1000 Sofia, Bulgaria'
+  );
   const [images, setImages] = useState<File[]>([]);
   const [video, setVideo] = useState<File | null>(null);
   const [licensePlateInput, setLicensePlateInput] = useState("");
   const [imagePreviewUrls, setImagePreviewUrls] = useState<string[]>([]);
   const [videoPreview, setVideoPreview] = useState<string | null>(null);
+  const [hoverAddButton, setHoverAddButton] = useState(false);
   const { setUser } = useAuth();
 
   const handleLocationChange = (lat: number, lng: number, addr: string) => {
@@ -27,7 +33,6 @@ const CreateReportPage = () => {
   const handleUpload = async () => {
     try {
       if (
-        !description ||
         licensePlates.length == 0 ||
         !latitude ||
         !longitude ||
@@ -59,25 +64,15 @@ const CreateReportPage = () => {
       setImagePreviewUrls([]);
       setVideo(null);
       setVideoPreview(null);
-      setLatitude(null);
-      setLongitude(null);
-      setAddress("");
+      setLatitude(42.697698767957746);
+      setLongitude(23.32189999999999);
+      setAddress(
+        'Sofia Center, bul. "Knyaginya Maria Luiza" 2, 1000 Sofia, Bulgaria'
+      );
     } catch (error) {
       console.log(error);
       alert(error);
     }
-  };
-
-  const onDropImages = (acceptedFiles: File[]) => {
-    const newImageFiles = acceptedFiles.filter((file) =>
-      file.type.startsWith("image/")
-    );
-
-    const combinedFiles = [...images, ...newImageFiles].slice(0, 5);
-    setImages(combinedFiles);
-
-    const newPreviews = newImageFiles.map((file) => URL.createObjectURL(file));
-    setImagePreviewUrls((prev) => [...prev, ...newPreviews].slice(0, 5));
   };
 
   const removeImage = (index: number) => {
@@ -88,16 +83,6 @@ const CreateReportPage = () => {
     newPreviews.splice(index, 1);
     setImages(newImages);
     setImagePreviewUrls(newPreviews);
-  };
-
-  const onDropVideo = (acceptedFiles: File[]) => {
-    const videoFile = acceptedFiles.find((file) =>
-      file.type.startsWith("video/")
-    );
-    if (videoFile && !video) {
-      setVideo(videoFile);
-      setVideoPreview(URL.createObjectURL(videoFile));
-    }
   };
 
   const removeVideo = () => {
@@ -115,95 +100,131 @@ const CreateReportPage = () => {
     }
   };
 
-  const {
-    getRootProps: getImageRootProps,
-    getInputProps: getImageInputProps,
-    // isDragActive: isImageDragActive,
-  } = useDropzone({
-    onDrop: onDropImages,
-    accept: { "image/*": [] },
-    multiple: true,
-    maxFiles: 5 - images.length,
-  });
+  const { getRootProps: getRootProps, getInputProps: getInputProps } =
+    useDropzone({
+      onDrop: (acceptedFiles) => {
+        const imageFiles = acceptedFiles.filter((file) =>
+          file.type.startsWith("image/")
+        );
 
-  const {
-    getRootProps: getVideoRootProps,
-    getInputProps: getVideoInputProps,
-    // isDragActive: isVideoDragActive,
-  } = useDropzone({
-    onDrop: onDropVideo,
-    accept: { "video/*": [] },
-    multiple: false,
-    maxFiles: 1,
-  });
+        const videoFile = acceptedFiles.find((file) =>
+          file.type.startsWith("video/")
+        );
+
+        if (imageFiles.length > 0) {
+          const combined = [...images, ...imageFiles].slice(0, 5);
+          setImages(combined);
+
+          const newPreviews = imageFiles.map((file) =>
+            URL.createObjectURL(file)
+          );
+          setImagePreviewUrls((prev) => [...prev, ...newPreviews].slice(0, 5));
+        }
+
+        if (videoFile && !video) {
+          setVideo(videoFile);
+          setVideoPreview(URL.createObjectURL(videoFile));
+        }
+      },
+      accept: { "image/*": [], "video/*": [] },
+      multiple: true,
+      maxFiles: 5 - images.length + (video ? 0 : 1),
+    });
 
   return (
     <>
-      <TextInput
-        placeholder="Description"
-        type="text"
-        val={description}
-        onChange={setDescription}
+      <NavBar
+        pageTitle="New Report"
+        searchQuery=""
+        setSearchQuery={() => {}}
+        setSearchResult={() => {}}
       />
-      <TextInput
-        placeholder="License Plate"
-        type="text"
-        val={licensePlateInput}
-        onChange={setLicensePlateInput}
-      />
-      <button onClick={handleAddPlate}>Add Plate</button>
+      <div className="main-page-background">
+        <div className="report-container">
+          <div className="flex gap-8 max-h-[700px]">
+            <div className="flex flex-col py-4 justify-between w-1/2">
+              <LocationPicker onLocationChange={handleLocationChange} />
+              <p className="text-paragraph-medium2 font-secondary text-primary1">
+                Address: {address}
+              </p>
+            </div>
+            <div className="flex flex-col border-l border-base-60 py-4 pl-8 gap-7 w-1/2">
+              <div className="flex flex-col gap-8 pb-14">
+                <div className="flex justify-end">
+                  <button
+                    onClick={handleUpload}
+                    className="default-filled-button px-6 gap-2.5"
+                  >
+                    Post
+                    <img src="/WhiteSendIcon.svg" alt="Post" />
+                  </button>
+                </div>
+                <div className="flex flex-col gap-6">
+                  {imagePreviewUrls.length != 0 || videoPreview ? (
+                    <MediaCarousel
+                      imagePreviews={imagePreviewUrls}
+                      videoPreview={videoPreview}
+                      removeImage={removeImage}
+                      removeVideo={removeVideo}
+                      getRootProps={getRootProps}
+                      getInputProps={getInputProps}
+                    />
+                  ) : (
+                    <MediaCarousel
+                      imagePreviews={[]}
+                      videoPreview={null}
+                      removeImage={() => {}}
+                      removeVideo={() => {}}
+                      getRootProps={getRootProps}
+                      getInputProps={getInputProps}
+                    />
+                  )}
+                  <div className="flex flex-col gap-4">
+                    <div className="grid grid-cols-3 grid-rows-2 gap-4">
+                      {licensePlates.map((plate, index) => (
+                        <LicensePlate licensePlate={plate} key={index} />
+                      ))}
 
-      <ul>
-        {licensePlates.map((plate, index) => (
-          <li key={index}>{plate}</li>
-        ))}
-      </ul>
+                      {licensePlates.length < 5 && (
+                        <input
+                          type="text"
+                          value={licensePlateInput}
+                          onChange={(e) => setLicensePlateInput(e.target.value)}
+                          className="bg-secondary2/10 rounded-lg py-3 px-5 text-center w-full caret-primary1 text-primary1"
+                        />
+                      )}
 
-      <label>Images (1-5):</label>
-      {images.length < 5 && (
-        <div {...getImageRootProps()}>
-          <input {...getImageInputProps()} />
-          <p>
-            Drag & drop up to {5 - images.length} more image(s), or click to
-            select
-          </p>
+                      {licensePlates.length < 5 && (
+                        <button
+                          onClick={handleAddPlate}
+                          className="default-not-filled-button py-1 px-6 text-paragraph-medium1 w-full flex"
+                          onMouseEnter={() => setHoverAddButton(true)}
+                          onMouseLeave={() => setHoverAddButton(false)}
+                        >
+                          Add
+                          <PlusIcon
+                            color={hoverAddButton ? "#250d77" : "#4110ea"}
+                          />
+                        </button>
+                      )}
+
+                      {licensePlates.length == 5 && (
+                        <div className="disabled-not-filled-button items-center justify-center flex">
+                          Max 5 Plates
+                        </div>
+                      )}
+                    </div>
+                    <p className="text-paragraph-medium2 font-secondary text-base-100">
+                      You can add up to 5 license plates, 5 photos and one
+                      video.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      )}
-      {imagePreviewUrls.map((url, index) => (
-        <div key={index}>
-          <img src={url} alt={`Image ${index}`} width={50} height={50} />
-          <button onClick={() => removeImage(index)}>Remove</button>
-        </div>
-      ))}
-
-      <label>Optional Video:</label>
-      {!video && (
-        <div {...getVideoRootProps()}>
-          <input {...getVideoInputProps()} />
-          <p>Drag & drop a video file, or click to select</p>
-        </div>
-      )}
-
-      {videoPreview && (
-        <>
-          <video src={videoPreview} controls />
-          <button onClick={removeVideo}>Remove</button>
-        </>
-      )}
-
-      <>
-        <h3>Select Location</h3>
-        <LocationPicker onLocationChange={handleLocationChange} />
-        {latitude && longitude && (
-          <p>
-            Address: {address}
-            <br />
-            Coordinates: {latitude}, {longitude}
-          </p>
-        )}
-      </>
-
-      <button onClick={handleUpload}>Submit Report</button>
+      </div>
     </>
   );
 };

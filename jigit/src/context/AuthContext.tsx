@@ -51,6 +51,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setAccessToken(accessToken);
     setRefreshToken(refreshToken);
     setUser(user);
+    refreshAuth();
   };
 
   const clearAuth = () => {
@@ -66,6 +67,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const storedRefreshToken = Cookies.get("refreshToken");
     if (!storedAcessToken || !storedRefreshToken) {
       clearAuth();
+      setLoading(false);
       return;
     }
     setAccessToken(storedAcessToken);

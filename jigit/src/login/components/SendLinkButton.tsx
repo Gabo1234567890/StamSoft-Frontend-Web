@@ -1,11 +1,7 @@
 import { forgotPassword } from "../../services/login";
 
-const ForgottenPasswordButton = ({ email }: { email: string }) => {
+const SendLinkButton = ({ email }: { email: string }) => {
   const handleClick = async () => {
-    if (!email.includes("@")) {
-      alert("Invalid email");
-      return;
-    }
     try {
       await forgotPassword(email);
       alert("An email has been sent to you");
@@ -14,7 +10,11 @@ const ForgottenPasswordButton = ({ email }: { email: string }) => {
       alert(error);
     }
   };
-  return <button onClick={handleClick}>Forgotten Password?</button>;
+  return (
+    <button className="default-filled-button" onClick={handleClick}>
+      Send Link
+    </button>
+  );
 };
 
-export default ForgottenPasswordButton;
+export default SendLinkButton;
