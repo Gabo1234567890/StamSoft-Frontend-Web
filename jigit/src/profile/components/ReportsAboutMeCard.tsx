@@ -42,9 +42,14 @@ const ReportsAboutMe = ({ reports }: { reports: Report[] }) => {
                 user.cars &&
                 user.cars.length !== 0 &&
                 user.cars.map((car) => (
-                  <LicensePlate licensePlate={car.licensePlate} key={car.id} />
+                  <button className="cursor-pointer h-fit hover:bg-primary2 hover:text-base-0 rounded-md">
+                    <LicensePlate
+                      licensePlate={car.licensePlate}
+                      key={car.id}
+                    />
+                  </button>
                 ))}
-              <button className="default-filled-button text-body1 rounded-lg">
+              <button className="default-filled-button text-body1 h-13 rounded-lg">
                 All
               </button>
             </div>
@@ -52,7 +57,7 @@ const ReportsAboutMe = ({ reports }: { reports: Report[] }) => {
 
           <>
             {reports.map((report) => (
-              <div className="shadow-none" key={report.id}>
+              <div key={report.id}>
                 <Report report={report} shared={false} />
               </div>
             ))}
