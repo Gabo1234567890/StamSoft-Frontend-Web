@@ -105,7 +105,7 @@
   }
 
   .main-page-background {
-    @apply w-full h-full flex flex-col gap-11 px-25 pt-38;
+    @apply w-full h-full flex flex-col gap-11 px-25 pt-38 pb-10;
   }
 
   .profile-cards-container {

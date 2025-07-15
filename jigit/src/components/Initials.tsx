@@ -15,7 +15,7 @@ const Initials = ({
     return email.slice(0, 2).toUpperCase();
   };
   return (
-    <div className="flex items-center justify-center aspect-square h-full w-1/9 bg-primary2 rounded-2xl">
+    <div className="relative flex items-center justify-center aspect-square h-full w-1/9 bg-primary2 rounded-2xl">
       <p
         className={`font-secondary lg:text-heading0 sm:text-heading3 ${
           focused ? "text-primary1" : "text-secondary2"

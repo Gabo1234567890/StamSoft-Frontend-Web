@@ -28,7 +28,6 @@ const PersonalInformationCard = ({ user }: { user: User }) => {
   return (
     <div className="profile-cards-container">
       <div className="flex flex-col gap-8">
-        {" "}
         {edit ? (
           <div className="flex flex-col gap-8">
             {/* Title and buttons */}
@@ -118,19 +117,19 @@ const PersonalInformationCard = ({ user }: { user: User }) => {
                 <div className="flex flex-col gap-7">
                   <InformationField
                     title="First Name"
-                    value={user?.firstName || "Your Name"}
+                    value={firstName || "Your Name"}
                     type="text"
                   />
                   <InformationField
                     title="Last Name"
-                    value={user?.lastName || "Your Name"}
+                    value={lastName || "Your Name"}
                     type="text"
                   />
                 </div>
                 <div className="flex flex-col gap-7">
                   <InformationField
                     title="Email"
-                    value={user?.email || ""}
+                    value={email || ""}
                     type="email"
                   />
                 </div>

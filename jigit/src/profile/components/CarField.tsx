@@ -4,6 +4,8 @@ import EditButton from "../../components/EditButton";
 import TextInput from "../../components/TextInput";
 import PencilIcon from "../../components/PencilIcon";
 import DeleteButton from "../../components/DeleteButton";
+import { deleteCarByID, patchCarByID } from "../../services/cars";
+import { useAuth } from "../../context/AuthContext";
 
 const CarField = ({ car }: { car: Car }) => {
   const [expanded, setExpanded] = useState(false);
@@ -20,6 +22,51 @@ const CarField = ({ car }: { car: Car }) => {
 
   const [licensePlate, setLicensePlate] = useState(car.licensePlate);
   const [focusedLicensePlate, setFocusedLicensePlate] = useState(false);
+
+  const { setUser } = useAuth();
+
+  const handlePatchCar = async () => {
+    try {
+      if (!car.id) {
+        throw new Error("Failed to get car id");
+      }
+      const response = await patchCarByID(car.id, {
+        model: model,
+        brand: brand,
+        licensePlate: licensePlate,
+      });
+      setUser((prevUser) => {
+        if (!prevUser || !prevUser.cars) return prevUser;
+        const index = prevUser.cars.indexOf(car);
+        prevUser.cars[index] = response;
+        return {
+          ...prevUser,
+          cars: [...(prevUser.cars || [])],
+        };
+      });
+    } catch (error) {
+      console.log(error);
+      alert(error);
+    }
+  };
+
+  const handleDeleteCar = async () => {
+    try {
+      if (!car.id) throw new Error("Failed to get car id");
+      await deleteCarByID(car.id);
+      setUser((prevUser) => {
+        if (!prevUser || !prevUser.cars) return prevUser;
+        prevUser.cars.splice(prevUser.cars.indexOf(car), 1);
+        return {
+          ...prevUser,
+          cars: [...(prevUser.cars || [])],
+        };
+      });
+    } catch (error) {
+      console.log(error);
+      alert(error);
+    }
+  };
 
   return (
     <div className="flex flex-col gap-5">
@@ -90,10 +137,13 @@ const CarField = ({ car }: { car: Car }) => {
 
               {/* Buttons */}
               <div className="flex gap-8 items-end pb-1">
-                <DeleteButton />
+                <DeleteButton handleDelete={handleDeleteCar} />
                 <EditButton
                   className="h-10 px-5 py-0.5"
-                  onClick={() => setEdit(false)}
+                  onClick={() => {
+                    setEdit(false);
+                    handlePatchCar();
+                  }}
                   editing={true}
                 />
               </div>
@@ -101,11 +151,11 @@ const CarField = ({ car }: { car: Car }) => {
           ) : (
             <div className="flex justify-between w-full items-end">
               <div className="flex px-3 w-2/3 justify-between">
-                <InformationField title="Brand" value={car.brand} type="text" />
-                <InformationField title="Model" value={car.model} type="text" />
+                <InformationField title="Brand" value={brand} type="text" />
+                <InformationField title="Model" value={model} type="text" />
                 <InformationField
                   title="License Plate"
-                  value={car.licensePlate}
+                  value={licensePlate}
                   type="text"
                 />
               </div>
